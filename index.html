@@ -1,0 +1,379 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Sushant Faujdar</title>
+
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600&display=swap" rel="stylesheet">
+
+<style>
+* { margin: 0; padding: 0; box-sizing: border-box; }
+
+body {
+  font-family: 'Inter', sans-serif;
+  background: #0a0a0a;
+  color: #fff;
+  overflow-x: hidden;
+}
+
+/* CANVAS BACKGROUND */
+canvas {
+  position: fixed;
+  top: 0;
+  left: 0;
+  z-index: 0;
+}
+
+/* Sidebar */
+.sidebar {
+  position: fixed;
+  left: 40px;
+  top: 40px;
+  color: #aaa;
+  z-index: 2;
+}
+
+.sidebar div {
+  margin-bottom: 20px;
+  cursor: pointer;
+}
+
+.sidebar div:hover { color: #fff; }
+
+/* Container */
+.container {
+  position: relative;
+  z-index: 2;
+  max-width: 800px;
+  margin: 0 auto;
+  padding: 100px 20px;
+  text-align: center;
+}
+
+/* Profile */
+.profile {
+  margin-bottom: 40px;
+}
+
+.profile img {
+  width: 100px;
+  height: 100px;
+  border-radius: 50%;
+  object-fit: cover;
+  margin-bottom: 20px;
+}
+
+h1 { 
+  font-size: 28px;
+  margin-bottom: 10px;
+}
+
+.desc {
+  color: #aaa;
+  font-size: 15px;
+  line-height: 1.6;
+  margin-bottom: 15px;
+}
+
+/* Socials */
+.socials {
+  display: flex;
+  justify-content: center;
+  gap: 16px;
+  margin-bottom: 50px;
+}
+
+.socials a {
+  width: 20px;
+  height: 20px;
+  opacity: 0.7;
+  transition: 0.2s ease;
+}
+
+.socials img {
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+  filter: invert(1);
+}
+
+.socials a:hover {
+  opacity: 1;
+  transform: translateY(-1px);
+}
+
+/* Sections */
+.section {
+  margin-top: 60px;
+  text-align: left;
+}
+
+h2 {
+  font-size: 18px;
+  margin: 50px 0 20px;
+}
+
+/* Cards */
+.acc-item {
+  border: 1px solid #222;
+  padding: 18px;
+  margin-bottom: 18px;
+  border-radius: 12px;
+  transition: 0.25s;
+}
+
+.acc-item:hover {
+  border-color: #333;
+  transform: translateY(-2px);
+  background: rgba(255,255,255,0.03);
+}
+
+.acc-title {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.left {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.logo {
+  width: 18px;
+  height: 18px;
+  object-fit: contain;
+}
+
+.timeline {
+  font-size: 12px;
+  color: #777;
+}
+
+.acc-content {
+  color: #aaa;
+  font-size: 14px;
+  line-height: 1.6;
+  margin-top: 8px;
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+  .sidebar {
+    position: static;
+    display: flex;
+    justify-content: center;
+    gap: 20px;
+    margin-bottom: 20px;
+  }
+}
+</style>
+</head>
+
+<body>
+
+<canvas id="bg"></canvas>
+
+<div class="sidebar">
+  <div onclick="showSection('meet')">Meet</div>
+  <div onclick="showSection('read')">Read</div>
+</div>
+
+<div class="container">
+
+<div id="meet">
+
+<div class="profile">
+  <img src="profile.jpg">
+  <h1>Sushant Faujdar</h1>
+  <p class="desc">I make confusing things make sense.</p>
+
+  <div class="socials">
+    <a href="https://www.linkedin.com/in/sushantf21" target="_blank">
+      <img src="https://cdn.jsdelivr.net/gh/simple-icons/simple-icons/icons/linkedin.svg">
+    </a>
+    <a href="https://x.com/FaujdarSushant" target="_blank">
+      <img src="https://cdn.jsdelivr.net/gh/simple-icons/simple-icons/icons/x.svg">
+    </a>
+    <a href="mailto:sushantfaujdar123@gmail.com">
+      <img src="https://cdn.jsdelivr.net/gh/simple-icons/simple-icons/icons/gmail.svg">
+    </a>
+  </div>
+</div>
+
+<div class="section">
+<h2>Work</h2>
+
+<div class="acc-item">
+  <div class="acc-title">
+    <div class="left">
+      <img src="meesho.jpg" class="logo">
+      <span>Meesho — Senior Business Associate</span>
+    </div>
+    <span class="timeline">2025 – Present</span>
+  </div>
+  <div class="acc-content">
+    Worked on improving the end-to-end order success funnel (N/G), identifying key drop-offs across pre and post shipment stages.
+  </div>
+</div>
+
+<div class="acc-item">
+  <div class="acc-title">
+    <div class="left">
+      <img src="bitcoin.jpg" class="logo">
+      <span>Sovran Wallet — Product Intern</span>
+    </div>
+    <span class="timeline">2024 – 2025</span>
+  </div>
+  <div class="acc-content">
+    Led UX and product improvements across onboarding and transactions.
+  </div>
+</div>
+
+<div class="acc-item">
+  <div class="acc-title">
+    <div class="left">
+      <img src="sob.png" class="logo">
+      <span>Summer of Bitcoin — Product Designer</span>
+    </div>
+    <span class="timeline">2024</span>
+  </div>
+  <div class="acc-content">
+    Redesigned product experiences and improved user engagement.
+  </div>
+</div>
+</div>
+
+<div class="section">
+<h2>Education</h2>
+
+<div class="acc-item">
+  <div class="acc-title">
+    <div class="left">
+      <span>IIT Kanpur — B.Tech Chemical Engineering</span>
+    </div>
+    <span class="timeline">2021 – 2025</span>
+  </div>
+  <div class="acc-content">
+    Built strong analytical foundations and explored product thinking.
+  </div>
+</div>
+</div>
+
+</div>
+
+<div id="read" style="display:none;">
+  <h2>Read</h2>
+  <p class="desc">I write about product thinking, systems, and behavior.</p>
+  <a href="https://thenomad21.substack.com" target="_blank">
+    The Nomad → Read Newsletter
+  </a>
+</div>
+
+</div>
+
+<script>
+// section toggle
+function showSection(section) {
+  document.getElementById('meet').style.display = 'none';
+  document.getElementById('read').style.display = 'none';
+  document.getElementById(section).style.display = 'block';
+}
+
+// canvas
+const canvas = document.getElementById("bg");
+const ctx = canvas.getContext("2d");
+
+canvas.width = window.innerWidth;
+canvas.height = window.innerHeight;
+
+// mouse
+let mouse = {
+  x: canvas.width / 2,
+  y: canvas.height / 2
+};
+
+window.addEventListener("mousemove", (e) => {
+  mouse.x = e.clientX;
+  mouse.y = e.clientY;
+});
+
+// particles
+let particles = [];
+
+for (let i = 0; i < 50; i++) {
+  particles.push({
+    x: Math.random() * canvas.width,
+    y: Math.random() * canvas.height,
+    r: Math.random() * 2 + 0.5,
+    dx: (Math.random() - 0.5) * 0.3,
+    dy: (Math.random() - 0.5) * 0.3
+  });
+}
+
+function animate() {
+  ctx.clearRect(0, 0, canvas.width, canvas.height);
+
+  let haloRadius = 80;
+
+  // 🌫 draw soft halo glow
+  let gradient = ctx.createRadialGradient(
+    mouse.x, mouse.y, 10,
+    mouse.x, mouse.y, 120
+  );
+  gradient.addColorStop(0, "rgba(255,255,255,0.08)");
+  gradient.addColorStop(1, "rgba(255,255,255,0)");
+
+  ctx.fillStyle = gradient;
+  ctx.beginPath();
+  ctx.arc(mouse.x, mouse.y, 120, 0, Math.PI * 2);
+  ctx.fill();
+
+  particles.forEach(p => {
+
+    let dx = mouse.x - p.x;
+    let dy = mouse.y - p.y;
+    let dist = Math.sqrt(dx * dx + dy * dy);
+
+    if (dist < 120) {
+      let angle = Math.atan2(dy, dx);
+
+      let targetX = mouse.x - Math.cos(angle) * haloRadius;
+      let targetY = mouse.y - Math.sin(angle) * haloRadius;
+
+      p.x += (targetX - p.x) * 0.05;
+      p.y += (targetY - p.y) * 0.05;
+    }
+
+    // natural float
+    p.x += p.dx;
+    p.y += p.dy;
+
+    // boundaries
+    if (p.x < 0 || p.x > canvas.width) p.dx *= -1;
+    if (p.y < 0 || p.y > canvas.height) p.dy *= -1;
+
+    // ✨ glow particles near cursor
+    let opacity = dist < 120 ? 0.6 : 0.2;
+
+    ctx.beginPath();
+    ctx.arc(p.x, p.y, p.r, 0, Math.PI * 2);
+    ctx.fillStyle = `rgba(255,255,255,${opacity})`;
+    ctx.fill();
+  });
+
+  requestAnimationFrame(animate);
+}
+
+animate();
+
+// resize
+window.addEventListener("resize", () => {
+  canvas.width = window.innerWidth;
+  canvas.height = window.innerHeight;
+});
+</script>
+</body>
+</html>
