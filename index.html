@@ -37,9 +37,19 @@ canvas {
 .sidebar div {
   margin-bottom: 20px;
   cursor: pointer;
+  padding: 8px 12px;
+  border-radius: 6px;
+  transition: 0.2s ease;
 }
 
-.sidebar div:hover { color: #fff; }
+.sidebar div:hover { 
+  color: #fff;
+  background: rgba(255,255,255,0.05);
+}
+
+.sidebar div:active {
+  background: rgba(255,255,255,0.1);
+}
 
 /* Container */
 .container {
@@ -157,6 +167,22 @@ h2 {
   font-size: 14px;
   line-height: 1.6;
   margin-top: 8px;
+}
+
+#read a {
+  display: inline-block;
+  color: #fff;
+  text-decoration: none;
+  padding: 12px 20px;
+  border: 1px solid #333;
+  border-radius: 8px;
+  margin-top: 20px;
+  transition: 0.2s ease;
+}
+
+#read a:hover {
+  background: rgba(255,255,255,0.05);
+  border-color: #555;
 }
 
 /* Responsive */
@@ -298,6 +324,14 @@ let mouse = {
 window.addEventListener("mousemove", (e) => {
   mouse.x = e.clientX;
   mouse.y = e.clientY;
+});
+
+// touch support for mobile
+window.addEventListener("touchmove", (e) => {
+  if (e.touches.length > 0) {
+    mouse.x = e.touches[0].clientX;
+    mouse.y = e.touches[0].clientY;
+  }
 });
 
 // particles
