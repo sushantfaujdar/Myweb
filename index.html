@@ -170,20 +170,127 @@ h2 {
   margin-top: 8px;
 }
 
-#read a {
-  display: inline-block;
-  color: #fff;
-  text-decoration: none;
-  padding: 12px 20px;
-  border: 1px solid #333;
-  border-radius: 8px;
-  margin-top: 20px;
-  transition: 0.2s ease;
+/* Newsletter Cards */
+.newsletter-grid {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  margin-top: 24px;
 }
 
-#read a:hover {
+.newsletter-card {
+  display: block;
+  text-decoration: none;
+  color: inherit;
+  border: 1px solid #1e1e1e;
+  border-radius: 14px;
+  padding: 24px 28px;
+  background: rgba(255,255,255,0.02);
+  transition: all 0.3s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+  position: relative;
+  overflow: hidden;
+}
+
+.newsletter-card::before {
+  content: '';
+  position: absolute;
+  left: 0;
+  top: 0;
+  bottom: 0;
+  width: 3px;
+  background: rgba(255,255,255,0.0);
+  transition: background 0.3s ease;
+  border-radius: 3px 0 0 3px;
+}
+
+.newsletter-card:hover {
+  border-color: #333;
+  background: rgba(255,255,255,0.04);
+  transform: translateY(-3px);
+  box-shadow: 0 8px 30px rgba(0,0,0,0.3);
+}
+
+.newsletter-card:hover::before {
+  background: rgba(255,255,255,0.25);
+}
+
+.card-meta {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin-bottom: 12px;
+}
+
+.card-date {
+  font-size: 12px;
+  color: #555;
+  letter-spacing: 0.5px;
+  text-transform: uppercase;
+}
+
+.card-category {
+  font-size: 10px;
+  color: #888;
+  background: rgba(255,255,255,0.06);
+  padding: 3px 10px;
+  border-radius: 20px;
+  letter-spacing: 0.8px;
+  text-transform: uppercase;
+}
+
+.card-title-text {
+  font-size: 18px;
+  font-weight: 600;
+  line-height: 1.4;
+  margin-bottom: 6px;
+  color: #eee;
+  transition: color 0.2s ease;
+}
+
+.newsletter-card:hover .card-title-text {
+  color: #fff;
+}
+
+.card-subtitle {
+  font-size: 14px;
+  color: #666;
+  line-height: 1.5;
+  font-weight: 300;
+}
+
+.card-arrow {
+  position: absolute;
+  right: 24px;
+  top: 50%;
+  transform: translateY(-50%) translateX(-4px);
+  opacity: 0;
+  transition: all 0.3s ease;
+  color: #555;
+  font-size: 18px;
+}
+
+.newsletter-card:hover .card-arrow {
+  opacity: 1;
+  transform: translateY(-50%) translateX(0);
+}
+
+#read .substack-cta {
+  display: inline-block;
+  color: #666;
+  text-decoration: none;
+  padding: 12px 24px;
+  border: 1px solid #222;
+  border-radius: 8px;
+  margin-top: 28px;
+  transition: 0.25s ease;
+  font-size: 13px;
+  letter-spacing: 0.5px;
+}
+
+#read .substack-cta:hover {
   background: rgba(255,255,255,0.05);
-  border-color: #555;
+  border-color: #444;
+  color: #aaa;
 }
 
 /* Responsive */
@@ -305,8 +412,73 @@ h2 {
 <div id="read" style="display:none;">
   <h2>Read</h2>
   <p class="desc">I write about product thinking, systems, and behavior.</p>
-  <a href="https://thenomad21.substack.com" target="_blank">
-    The Nomad → Read Newsletter
+
+  <div class="newsletter-grid">
+
+    <a class="newsletter-card" href="https://thenomad21.substack.com/p/the-last-exam" target="_blank">
+      <div class="card-meta">
+        <span class="card-date">Dec 2025</span>
+        <span class="card-category">Essay</span>
+      </div>
+      <div class="card-title-text">The Last Exam</div>
+      <div class="card-subtitle">Maybe nostalgia is just happiness with a bruise on it.</div>
+      <span class="card-arrow">→</span>
+    </a>
+
+    <a class="newsletter-card" href="https://thenomad21.substack.com/p/the-world-is-becoming-small-again" target="_blank">
+      <div class="card-meta">
+        <span class="card-date">Dec 2025</span>
+        <span class="card-category">Geopolitics</span>
+      </div>
+      <div class="card-title-text">The World Is Becoming Small Again</div>
+      <div class="card-subtitle">Borders Are Back, and So Are Old Ghosts</div>
+      <span class="card-arrow">→</span>
+    </a>
+
+    <a class="newsletter-card" href="https://thenomad21.substack.com/p/the-ordinary" target="_blank">
+      <div class="card-meta">
+        <span class="card-date">Dec 2025</span>
+        <span class="card-category">Essay</span>
+      </div>
+      <div class="card-title-text">The Ordinary</div>
+      <div class="card-subtitle">I'm not talking about mediocrity, am I?</div>
+      <span class="card-arrow">→</span>
+    </a>
+
+    <a class="newsletter-card" href="https://thenomad21.substack.com/p/when-two-giants-whisper" target="_blank">
+      <div class="card-meta">
+        <span class="card-date">Dec 2025</span>
+        <span class="card-category">Geopolitics</span>
+      </div>
+      <div class="card-title-text">When Two Giants Whisper</div>
+      <div class="card-subtitle">The Quiet Architecture of a New World Order</div>
+      <span class="card-arrow">→</span>
+    </a>
+
+    <a class="newsletter-card" href="https://thenomad21.substack.com/p/wisdom-is-a-curse" target="_blank">
+      <div class="card-meta">
+        <span class="card-date">Nov 2025</span>
+        <span class="card-category">Essay</span>
+      </div>
+      <div class="card-title-text">Wisdom Is a Curse</div>
+      <div class="card-subtitle">The Less I Know The Better.</div>
+      <span class="card-arrow">→</span>
+    </a>
+
+    <a class="newsletter-card" href="https://thenomad21.substack.com/p/why-every-city-feels-the-same-now" target="_blank">
+      <div class="card-meta">
+        <span class="card-date">Nov 2025</span>
+        <span class="card-category">Essay</span>
+      </div>
+      <div class="card-title-text">Why Every City Feels the Same Now</div>
+      <div class="card-subtitle">Maybe it's not the cities that feel similar, maybe it's the part of us that keeps searching.</div>
+      <span class="card-arrow">→</span>
+    </a>
+
+  </div>
+
+  <a class="substack-cta" href="https://thenomad21.substack.com" target="_blank">
+    The Nomad → Read on Substack
   </a>
 </div>
 
