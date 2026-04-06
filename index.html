@@ -144,6 +144,12 @@ h2 {
   display: flex;
   justify-content: space-between;
   align-items: center;
+  cursor: pointer;
+  user-select: none;
+}
+
+.acc-title:hover {
+  opacity: 0.8;
 }
 
 .left {
@@ -161,13 +167,37 @@ h2 {
 .timeline {
   font-size: 12px;
   color: #777;
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.toggle-icon {
+  font-size: 18px;
+  color: #555;
+  font-weight: 300;
+  transition: transform 0.3s ease;
+}
+
+.acc-item.active .toggle-icon {
+  transform: rotate(45deg);
 }
 
 .acc-content {
   color: #aaa;
   font-size: 14px;
   line-height: 1.6;
-  margin-top: 8px;
+  max-height: 0;
+  overflow: hidden;
+  opacity: 0;
+  transition: max-height 0.4s ease, opacity 0.4s ease, margin-top 0.4s ease;
+  margin-top: 0;
+}
+
+.acc-item.active .acc-content {
+  max-height: 1200px;
+  opacity: 1;
+  margin-top: 12px;
 }
 
 .acc-subtitle {
@@ -377,7 +407,7 @@ h2 {
       <img src="meesho.jpg" class="logo" alt="Meesho">
       <span>Meesho — Senior Business Associate</span>
     </div>
-    <span class="timeline">Jun 2025 – Present</span>
+    <div class="timeline"><span>Jun 2025 – Present</span> <span class="toggle-icon">+</span></div>
   </div>
   <div class="acc-content">
     <div class="acc-subtitle">Hired as APM 1 via campus placements; role pivoted to SBA following company-wide restructuring one month before joining.</div>
@@ -397,7 +427,7 @@ h2 {
       <img src="sob.png" class="logo" alt="Spiral">
       <span>Spiral (Block, Inc.) — Product Designer</span>
     </div>
-    <span class="timeline">May 2024 – Aug 2024</span>
+    <div class="timeline"><span>May 2024 – Aug 2024</span> <span class="toggle-icon">+</span></div>
   </div>
   <div class="acc-content">
     <div class="acc-subtitle">Awarded Letter of Recommendation for Exceptional Performance | FOSS Bitcoin Grant Recipient | Selected via Summer of Bitcoin 2024.</div>
@@ -415,7 +445,7 @@ h2 {
       <img src="bitcoin.jpg" class="logo" alt="Sovran">
       <span>Sovran E-Cash Wallet – Bitshala — Product Management Intern</span>
     </div>
-    <span class="timeline">Dec 2024 – May 2025</span>
+    <div class="timeline"><span>Dec 2024 – May 2025</span> <span class="toggle-icon">+</span></div>
   </div>
   <div class="acc-content">
     <div class="acc-subtitle">Handled end-to-end 0-to-1 product journey, scaling the application from early development to production launch in 6 months.</div>
@@ -435,7 +465,7 @@ h2 {
     <div class="left">
       <span>IIT Kanpur — B.Tech in Chemical Engineering</span>
     </div>
-    <span class="timeline">2021 – 2025</span>
+    <div class="timeline"><span>2021 – 2025</span> <span class="toggle-icon">+</span></div>
   </div>
   <div class="acc-content">
     CPI: 7.0 / 10
@@ -446,7 +476,13 @@ h2 {
 <div class="section">
 <h2>Skills</h2>
 <div class="acc-item">
-  <div class="acc-content" style="margin-top:0;">
+  <div class="acc-title">
+    <div class="left">
+      <span>Core Competencies</span>
+    </div>
+    <div class="timeline"><span class="toggle-icon">+</span></div>
+  </div>
+  <div class="acc-content">
     <p><strong style="color:#ddd; font-weight:600;">Product Management:</strong> Product Strategy, Product Roadmap, PRD Writing, Go-to-Market, A/B Testing, Funnel Analysis, Release QA, OKRs, User Research</p>
     <p style="margin-top:10px"><strong style="color:#ddd; font-weight:600;">Analytics and Growth:</strong> CAC, ROAS, LTV, Cohort Analysis, Google Analytics, Meta Ads, Google Performance Max, Excel</p>
     <p style="margin-top:10px"><strong style="color:#ddd; font-weight:600;">Design and Tools:</strong> Figma, UX Design, Wireframing, Jira, Notion, Confluence, Mixpanel, Amplitude, TestFlight, SQL</p>
@@ -457,7 +493,13 @@ h2 {
 <div class="section">
 <h2>Awards & Achievements</h2>
 <div class="acc-item">
-  <div class="acc-content" style="margin-top:0;">
+  <div class="acc-title">
+    <div class="left">
+      <span>Key Highlights</span>
+    </div>
+    <div class="timeline"><span class="toggle-icon">+</span></div>
+  </div>
+  <div class="acc-content">
     <ul>
       <li><strong style="color:#ddd; font-weight:600;">Summer of Bitcoin 2024:</strong> Selected among top 65 from 35,000+ applicants across 70+ countries for open-source bitcoin design</li>
       <li><strong style="color:#ddd; font-weight:600;">Bitshala Global Fellowship:</strong> Selected as Global Fellow for open-source product and UX design within the Bitcoin ecosystem</li>
@@ -474,7 +516,7 @@ h2 {
     <div class="left">
       <span>Strategic Finance and GTM Analysis – boAt Lifestyle</span>
     </div>
-    <span class="timeline">May 2024 – Aug 2024</span>
+    <div class="timeline"><span>May 2024 – Aug 2024</span> <span class="toggle-icon">+</span></div>
   </div>
   <div class="acc-content">
     <div class="acc-subtitle">Under Prof. Amit Shukla, Department of Management Sciences, IIT Kanpur</div>
@@ -489,7 +531,13 @@ h2 {
 <div class="section">
 <h2>Extracurricular Activities</h2>
 <div class="acc-item">
-  <div class="acc-content" style="margin-top:0;">
+  <div class="acc-title">
+    <div class="left">
+      <span>Activities & Leadership</span>
+    </div>
+    <div class="timeline"><span class="toggle-icon">+</span></div>
+  </div>
+  <div class="acc-content">
     <ul>
       <li><strong style="color:#ddd; font-weight:600;">Head, Media and Publicity (Inter IIT Sports Meet 2024):</strong> Led a 100+ member team across branding, sponsorships, and event operations; scaled digital reach to 20M+ users, a 75% YoY increase in platform engagement across all handles</li>
       <li><strong style="color:#ddd; font-weight:600;">Content Creator, YouTube:</strong> Reached 60,000+ accounts by producing 22 videos focused on personal growth and finance</li>
@@ -683,6 +731,19 @@ animate();
 window.addEventListener("resize", () => {
   canvas.width = window.innerWidth;
   canvas.height = window.innerHeight;
+});
+
+// Accordion Toggle Implementation
+document.addEventListener('DOMContentLoaded', () => {
+  const accItems = document.querySelectorAll('.acc-item');
+  accItems.forEach(item => {
+    const title = item.querySelector('.acc-title');
+    if (title) {
+      title.addEventListener('click', () => {
+        item.classList.toggle('active');
+      });
+    }
+  });
 });
 </script>
 </body>
