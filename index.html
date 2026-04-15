@@ -1,836 +1,866 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Sushant Faujdar</title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sushant Faujdar</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --bg-color: #FAFAFA;
+            --text-main: #111111;
+            --text-muted: #666666;
+            --border-color: #EAEAEA;
+            --accent: #E0EBF5;
+            --accent-text: #41729F;
+            --sidebar-width: 80px;
+        }
 
-<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600&display=swap" rel="stylesheet">
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
 
-<style>
-* { margin: 0; padding: 0; box-sizing: border-box; }
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: var(--bg-color);
+            color: var(--text-main);
+            line-height: 1.6;
+            -webkit-font-smoothing: antialiased;
+        }
 
-body {
-  font-family: 'Inter', sans-serif;
-  background: #0a0a0a;
-  color: #fff;
-  overflow-x: hidden;
-}
+        a {
+            color: inherit;
+            text-decoration: none;
+        }
 
-/* CANVAS BACKGROUND */
-canvas {
-  position: fixed;
-  top: 0;
-  left: 0;
-  z-index: 0;
-  pointer-events: none;
-}
+        /* --- SIDEBAR NAV --- */
+        .sidebar {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: var(--sidebar-width);
+            height: 100vh;
+            border-right: 1px solid var(--border-color);
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            padding-top: 100px;
+            z-index: 100;
+            background: var(--bg-color);
+        }
 
-/* Sidebar */
-.sidebar {
-  position: fixed;
-  left: 40px;
-  top: 40px;
-  color: #aaa;
-  z-index: 2;
-}
+        .nav-item {
+            position: relative;
+            margin-bottom: 24px;
+            width: 40px;
+            height: 40px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border-radius: 8px;
+            cursor: pointer;
+            color: #999;
+            transition: all 0.2s ease;
+        }
 
-.sidebar div {
-  margin-bottom: 20px;
-  cursor: pointer;
-  padding: 8px 12px;
-  border-radius: 6px;
-  transition: 0.2s ease;
-}
+        .nav-item svg {
+            width: 20px;
+            height: 20px;
+            fill: none;
+            stroke: currentColor;
+            stroke-width: 2;
+            stroke-linecap: round;
+            stroke-linejoin: round;
+        }
 
-.sidebar div:hover { 
-  color: #fff;
-  background: rgba(255,255,255,0.05);
-}
+        .nav-item:hover {
+            color: var(--text-main);
+            background: rgba(0,0,0,0.03);
+        }
 
-.sidebar div:active {
-  background: rgba(255,255,255,0.1);
-}
+        .nav-item.active {
+            color: var(--text-main);
+        }
 
-/* Container */
-.container {
-  position: relative;
-  z-index: 2;
-  max-width: 800px;
-  margin: 0 auto;
-  padding: 100px 20px;
-  text-align: center;
-}
+        /* Tooltip */
+        .tooltip {
+            position: absolute;
+            left: 55px;
+            background: rgba(0,0,0,0.8);
+            color: #fff;
+            padding: 4px 10px;
+            border-radius: 4px;
+            font-size: 12px;
+            font-weight: 500;
+            opacity: 0;
+            pointer-events: none;
+            transform: translateX(-10px);
+            transition: all 0.2s ease;
+            white-space: nowrap;
+        }
 
-/* Profile */
-.profile {
-  margin-bottom: 40px;
-}
+        .nav-item:hover .tooltip {
+            opacity: 1;
+            transform: translateX(0);
+        }
 
-.profile img {
-  width: 100px;
-  height: 100px;
-  border-radius: 50%;
-  object-fit: cover;
-  margin-bottom: 20px;
-}
+        /* --- MAIN LAYOUT --- */
+        .main-container {
+            margin-left: var(--sidebar-width);
+            padding: 100px 40px;
+            max-width: 900px;
+            min-height: 100vh;
+        }
 
-h1 { 
-  font-size: 28px;
-  margin-bottom: 10px;
-}
+        section {
+            display: none;
+            animation: fadeIn 0.4s ease forwards;
+        }
 
-.desc {
-  color: #aaa;
-  font-size: 15px;
-  line-height: 1.6;
-  margin-bottom: 15px;
-}
+        section.active {
+            display: block;
+        }
 
-/* Socials */
-.socials {
-  display: flex;
-  justify-content: center;
-  gap: 16px;
-  margin-bottom: 50px;
-}
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(5px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
 
-.socials a {
-  width: 20px;
-  height: 20px;
-  opacity: 0.7;
-  transition: 0.2s ease;
-}
+        .page-title {
+            font-size: 24px;
+            font-weight: 600;
+            margin-bottom: 8px;
+        }
 
-.socials img {
-  width: 100%;
-  height: 100%;
-  object-fit: contain;
-  filter: invert(1);
-}
+        .page-subtitle {
+            font-size: 16px;
+            color: var(--text-muted);
+            margin-bottom: 60px;
+        }
 
-.socials a:hover {
-  opacity: 1;
-  transform: translateY(-1px);
-}
+        /* --- TWO COLUMN BLOCK --- */
+        .block {
+            display: flex;
+            margin-bottom: 60px;
+        }
 
-/* Sections */
-.section {
-  margin-top: 60px;
-  text-align: left;
-}
+        .label-col {
+            width: 160px;
+            flex-shrink: 0;
+            font-size: 11px;
+            letter-spacing: 1.2px;
+            text-transform: uppercase;
+            color: var(--text-muted);
+            padding-top: 5px;
+        }
 
-h2 {
-  font-size: 18px;
-  margin: 50px 0 20px;
-}
+        .content-col {
+            flex-grow: 1;
+        }
 
-/* Cards */
-.acc-item {
-  border: 1px solid #222;
-  padding: 18px;
-  margin-bottom: 18px;
-  border-radius: 12px;
-  transition: 0.25s;
-}
+        /* --- TYPOGRAPHY & ELEMENTS --- */
+        p {
+            margin-bottom: 16px;
+            color: #333;
+        }
 
-.acc-item:hover {
-  border-color: #333;
-  transform: translateY(-2px);
-  background: rgba(255,255,255,0.03);
-}
+        .pill {
+            display: inline-block;
+            font-size: 10px;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            padding: 3px 8px;
+            border-radius: 4px;
+            background: var(--accent);
+            color: var(--accent-text);
+            border: 1px solid rgba(65, 114, 159, 0.2);
+            font-weight: 500;
+            margin-top: 8px;
+        }
 
-.acc-title {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  cursor: pointer;
-  user-select: none;
-}
+        /* --- EXPERIENCE TIMELINE --- */
+        .exp-item {
+            display: flex;
+            margin-bottom: 30px;
+        }
 
-.acc-title:hover {
-  opacity: 0.8;
-}
+        .exp-logo {
+            width: 40px;
+            height: 40px;
+            border-radius: 8px;
+            background: #fff;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.05);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-right: 16px;
+            overflow: hidden;
+            flex-shrink: 0;
+            border: 1px solid var(--border-color);
+        }
 
-.left {
-  display: flex;
-  align-items: center;
-  gap: 10px;
-}
+        .exp-logo img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
 
-.logo {
-  width: 18px;
-  height: 18px;
-  object-fit: contain;
-}
+        .exp-details {
+            flex-grow: 1;
+            display: flex;
+            justify-content: space-between;
+        }
 
-.timeline {
-  font-size: 12px;
-  color: #777;
-  display: flex;
-  align-items: center;
-  gap: 12px;
-}
+        .exp-title {
+            font-size: 15px;
+            font-weight: 500;
+            color: #111;
+        }
 
-.toggle-icon {
-  font-size: 18px;
-  color: #555;
-  font-weight: 300;
-  transition: transform 0.3s ease;
-}
+        .exp-company {
+            font-size: 14px;
+            color: var(--text-muted);
+            margin-top: 2px;
+        }
 
-.acc-item.active .toggle-icon {
-  transform: rotate(45deg);
-}
+        .exp-date {
+            font-size: 14px;
+            color: var(--text-muted);
+            text-align: right;
+            white-space: nowrap;
+        }
 
-.acc-content {
-  color: #aaa;
-  font-size: 14px;
-  line-height: 1.6;
-  max-height: 54px;
-  overflow: hidden;
-  opacity: 0.65;
-  transition: max-height 0.4s ease, opacity 0.4s ease;
-  margin-top: 12px;
-  -webkit-mask-image: linear-gradient(to bottom, black 30%, transparent 100%);
-  mask-image: linear-gradient(to bottom, black 30%, transparent 100%);
-}
+        .exp-desc {
+            margin-top: 12px;
+            font-size: 14px;
+            color: #444;
+        }
+        
+        .exp-desc ul {
+            padding-left: 18px;
+            margin-top: 8px;
+        }
+        .exp-desc li {
+            margin-bottom: 6px;
+        }
 
-.acc-item.active .acc-content {
-  max-height: 1500px;
-  opacity: 1;
-  -webkit-mask-image: none;
-  mask-image: none;
-}
+        /* --- PROJECT GRID --- */
+        .projects-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 24px;
+        }
 
-.acc-subtitle {
-  font-size: 13px;
-  color: #888;
-  margin-bottom: 12px;
-  font-style: italic;
-}
+        .project-card {
+            border: 1px solid var(--border-color);
+            border-radius: 12px;
+            padding: 24px;
+            background: #fff;
+            transition: all 0.2s ease;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.02);
+        }
 
-.acc-content ul {
-  padding-left: 18px;
-  margin-top: 6px;
-}
+        .project-card:hover {
+            box-shadow: 0 8px 30px rgba(0,0,0,0.06);
+            transform: translateY(-2px);
+        }
 
-.acc-content li {
-  margin-bottom: 6px;
-}
+        .project-title {
+            font-weight: 600;
+            font-size: 16px;
+            margin-bottom: 8px;
+        }
 
-.acc-content li:last-child {
-  margin-bottom: 0;
-}
+        .project-desc {
+            font-size: 14px;
+            color: var(--text-muted);
+            margin-bottom: 16px;
+        }
 
-/* Newsletter Cards */
-.newsletter-grid {
-  display: flex;
-  flex-direction: column;
-  gap: 16px;
-  margin-top: 24px;
-}
+        /* Deck Stack inside Project Card */
+        .deck-stack-mini {
+            position: relative;
+            height: 120px;
+            width: 100%;
+            margin-top: 20px;
+        }
+        .deck-img {
+            position: absolute;
+            width: 80%;
+            border-radius: 6px;
+            border: 1px solid #ddd;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.08);
+            left: 10%;
+            transition: transform 0.3s ease;
+        }
+        .deck-img:nth-child(1) { top: 30px; z-index: 1; transform: scale(0.9); opacity: 0.6; }
+        .deck-img:nth-child(2) { top: 15px; z-index: 2; transform: scale(0.95); opacity: 0.8; }
+        .deck-img:nth-child(3) { top: 0; z-index: 3; }
+        
+        .project-card:hover .deck-img:nth-child(1) { transform: scale(0.9) translateY(-5px); }
+        .project-card:hover .deck-img:nth-child(2) { transform: scale(0.95) translateY(-2px); }
 
-.newsletter-card {
-  display: block;
-  text-decoration: none;
-  color: inherit;
-  border: 1px solid #1e1e1e;
-  border-radius: 14px;
-  padding: 24px 28px;
-  background: rgba(255,255,255,0.02);
-  transition: all 0.3s cubic-bezier(0.25, 0.46, 0.45, 0.94);
-  position: relative;
-  overflow: hidden;
-}
+        /* --- BLOG GRID --- */
+        .blog-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 24px;
+        }
 
-.newsletter-card::before {
-  content: '';
-  position: absolute;
-  left: 0;
-  top: 0;
-  bottom: 0;
-  width: 3px;
-  background: rgba(255,255,255,0.0);
-  transition: background 0.3s ease;
-  border-radius: 3px 0 0 3px;
-}
+        .blog-card {
+            border: 1px solid var(--border-color);
+            border-radius: 12px;
+            background: #fff;
+            overflow: hidden;
+            transition: all 0.2s ease;
+            display: flex;
+            flex-direction: column;
+            text-decoration: none;
+            color: inherit;
+        }
 
-.newsletter-card:hover {
-  border-color: #333;
-  background: rgba(255,255,255,0.04);
-  transform: translateY(-3px);
-  box-shadow: 0 8px 30px rgba(0,0,0,0.3);
-}
+        .blog-card:hover {
+            box-shadow: 0 8px 30px rgba(0,0,0,0.06);
+            transform: translateY(-2px);
+        }
 
-.newsletter-card:hover::before {
-  background: rgba(255,255,255,0.25);
-}
+        .blog-visual {
+            height: 180px;
+            background: #f0f0f0;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 24px;
+            font-weight: 300;
+            color: #ccc;
+            text-align: center;
+            padding: 20px;
+            border-bottom: 1px solid var(--border-color);
+        }
 
-.card-meta {
-  display: flex;
-  align-items: center;
-  gap: 10px;
-  margin-bottom: 12px;
-}
+        /* Specific styles for blog typography cards */
+        .blog-card .blog-visual strong {
+            font-weight: 600;
+            color: #111;
+        }
 
-.card-date {
-  font-size: 12px;
-  color: #555;
-  letter-spacing: 0.5px;
-  text-transform: uppercase;
-}
+        .blog-content {
+            padding: 20px;
+            display: flex;
+            flex-direction: column;
+            flex-grow: 1;
+            justify-content: space-between;
+        }
 
-.card-category {
-  font-size: 10px;
-  color: #888;
-  background: rgba(255,255,255,0.06);
-  padding: 3px 10px;
-  border-radius: 20px;
-  letter-spacing: 0.8px;
-  text-transform: uppercase;
-}
+        .blog-title {
+            font-weight: 500;
+            font-size: 15px;
+            margin-bottom: 8px;
+        }
 
-.card-title-text {
-  font-size: 18px;
-  font-weight: 600;
-  line-height: 1.4;
-  margin-bottom: 6px;
-  color: #eee;
-  transition: color 0.2s ease;
-}
+        .blog-meta {
+            display: flex;
+            justify-content: space-between;
+            font-size: 12px;
+            color: var(--text-muted);
+            margin-top: 16px;
+        }
 
-.newsletter-card:hover .card-title-text {
-  color: #fff;
-}
+        /* --- IMPOSSIBLE LIST --- */
+        .impossible-category {
+            margin-bottom: 30px;
+        }
+        .impossible-category h3 {
+            font-size: 16px;
+            font-weight: 600;
+            margin-bottom: 12px;
+        }
+        .bucket-list {
+            list-style: none;
+        }
+        .bucket-list li {
+            margin-bottom: 8px;
+            font-size: 15px;
+            display: flex;
+            align-items: center;
+        }
+        .bucket-list li.done {
+            text-decoration: line-through;
+            color: var(--text-muted);
+        }
+        .bucket-list li::before {
+            content: '';
+            display: inline-block;
+            width: 14px;
+            height: 14px;
+            border: 1px solid #ccc;
+            border-radius: 3px;
+            margin-right: 12px;
+            flex-shrink: 0;
+        }
+        .bucket-list li.done::before {
+            background: #41729F;
+            border-color: #41729F;
+        }
 
-.card-subtitle {
-  font-size: 14px;
-  color: #666;
-  line-height: 1.5;
-  font-weight: 300;
-}
+        /* Update Feed */
+        .update-item {
+            margin-bottom: 24px;
+            padding-bottom: 24px;
+            border-bottom: 1px solid var(--border-color);
+        }
+        .update-item:last-child {
+            border-bottom: none;
+        }
+        .update-date {
+            font-size: 13px;
+            color: var(--text-muted);
+            margin-bottom: 4px;
+        }
 
-.card-arrow {
-  position: absolute;
-  right: 24px;
-  top: 50%;
-  transform: translateY(-50%) translateX(-4px);
-  opacity: 0;
-  transition: all 0.3s ease;
-  color: #555;
-  font-size: 18px;
-}
-
-.newsletter-card:hover .card-arrow {
-  opacity: 1;
-  transform: translateY(-50%) translateX(0);
-}
-
-#read .substack-cta {
-  display: inline-block;
-  color: #666;
-  text-decoration: none;
-  padding: 12px 24px;
-  border: 1px solid #222;
-  border-radius: 8px;
-  margin-top: 28px;
-  transition: 0.25s ease;
-  font-size: 13px;
-  letter-spacing: 0.5px;
-}
-
-#read .substack-cta:hover {
-  background: rgba(255,255,255,0.05);
-  border-color: #444;
-  color: #aaa;
-}
-
-/* Deck Stack */
-.deck-stack {
-  position: relative;
-  margin: 24px auto 40px;
-  width: 90%;
-  max-width: 500px;
-}
-
-.deck-img {
-  border-radius: 8px;
-  box-shadow: 0 10px 30px rgba(0,0,0,0.5);
-  border: 1px solid #333;
-  transition: transform 0.3s ease, opacity 0.3s ease;
-}
-
-.deck-img-1 {
-  display: block;
-  position: relative;
-  width: 100%;
-  z-index: 3;
-}
-
-.deck-img-2 {
-  position: absolute;
-  top: 15px;
-  left: 5%;
-  width: 90%;
-  z-index: 2;
-  opacity: 0.8;
-}
-
-.deck-img-3 {
-  position: absolute;
-  top: 30px;
-  left: 10%;
-  width: 80%;
-  z-index: 1;
-  opacity: 0.6;
-}
-
-.deck-stack:hover .deck-img-2 {
-  transform: translateY(-5px);
-  opacity: 0.9;
-}
-
-.deck-stack:hover .deck-img-3 {
-  transform: translateY(-10px);
-  opacity: 0.8;
-}
-
-/* Responsive */
-@media (max-width: 768px) {
-  .sidebar {
-    position: static;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    gap: 20px;
-    margin-bottom: 20px;
-    padding: 20px;
-    z-index: 10;
-    width: 100%;
-  }
-
-  .sidebar div {
-    padding: 12px 24px;
-    font-size: 16px;
-    user-select: none;
-    -webkit-user-select: none;
-  }
-}
-</style>
+        @media (max-width: 768px) {
+            .sidebar {
+                top: auto;
+                bottom: 0;
+                width: 100%;
+                height: 60px;
+                flex-direction: row;
+                justify-content: center;
+                border-right: none;
+                border-top: 1px solid var(--border-color);
+                padding-top: 0;
+            }
+            .nav-item {
+                margin: 0 15px;
+            }
+            .tooltip {
+                display: none;
+            }
+            .main-container {
+                margin-left: 0;
+                padding: 40px 20px 100px 20px;
+            }
+            .block {
+                flex-direction: column;
+            }
+            .label-col {
+                width: 100%;
+                margin-bottom: 12px;
+            }
+            .exp-details {
+                flex-direction: column;
+            }
+            .exp-date {
+                text-align: left;
+                margin-top: 4px;
+            }
+            .projects-grid, .blog-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
 </head>
-
 <body>
 
-<canvas id="bg"></canvas>
-
-<div class="sidebar">
-  <div onclick="showSection('meet')">Meet</div>
-  <div onclick="showSection('read')">Read</div>
-</div>
-
-<div class="container">
-
-<div id="meet">
-
-<div class="profile">
-  <img src="profile.jpg">
-  <h1>Sushant Faujdar</h1>
-  <p class="desc">I make confusing things make sense.</p>
-
-  <div class="socials">
-    <a href="https://www.linkedin.com/in/sushantf21" target="_blank">
-      <img src="https://cdn.jsdelivr.net/gh/simple-icons/simple-icons/icons/linkedin.svg">
-    </a>
-    <a href="https://x.com/FaujdarSushant" target="_blank">
-      <img src="https://cdn.jsdelivr.net/gh/simple-icons/simple-icons/icons/x.svg">
-    </a>
-    <a href="mailto:sushantfaujdar123@gmail.com">
-      <img src="https://cdn.jsdelivr.net/gh/simple-icons/simple-icons/icons/gmail.svg">
-    </a>
-  </div>
-</div>
-
-<div class="section">
-<h2>Work Experience</h2>
-
-<div class="acc-item">
-  <div class="acc-title">
-    <div class="left">
-      <img src="meesho.jpg" class="logo" alt="Meesho">
-      <span>Meesho — Senior Business Associate</span>
+<nav class="sidebar">
+    <!-- Home -->
+    <div class="nav-item active" onclick="showPage('home')">
+        <svg viewBox="0 0 24 24"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"></path><polyline points="9 22 9 12 15 12 15 22"></polyline></svg>
+        <span class="tooltip">Home</span>
     </div>
-    <div class="timeline"><span>Jun 2025 – Present</span> <span class="toggle-icon">+</span></div>
-  </div>
-  <div class="acc-content">
-    <div class="acc-subtitle">Hired as APM 1 via campus placements; role pivoted to SBA following company-wide restructuring one month before joining.</div>
-    <ul>
-      <li>Executed root-cause decomposition of the seller funnel; attributed 24pp gap to pre-shipment cancellations and 9pp to RTOs, enabling targeted product and business interventions at critical breakpoints to maximize net sales realization and bottom line growth</li>
-      <li>Optimized seller registration flows via structured funnel analysis; collaborated with Product to streamline NGST seller EID generation by leveraging PAN card data, yielding 1.3x uplift in registrations and improved downstream activation rates & registration velocity</li>
-      <li>Managed 2.5Cr+ cycle ad spend via custom segmentation; achieved 6x ROAS and 22% CAC reduction while acquiring 7L sellers in 4 months through high-intent Meta and Google Performance Max campaigns targeting tier-2 and tier-3 cities across regional cohorts</li>
-      <li>Built a campaign evaluation framework tracking conversion quality via internal funnel metrics including 1 OS in 10 Days CAC, 1 OD in 15 Days CAC, and 5 OD in 60 Days CAC, enabling structured data-driven optimization across all seller acquisition campaigns</li>
-      <li>Ran POCs with 300+ sellers to validate NDD (Next Day Dispatch) programme readiness; POC sellers saw a 5% drop in user cancellation rates post-intervention, validating and driving NDD as a platform-wide standard</li>
-    </ul>
-  </div>
-</div>
-
-<div class="acc-item">
-  <div class="acc-title">
-    <div class="left">
-      <img src="sob.png" class="logo" alt="Spiral">
-      <span>Spiral (Block, Inc.) — Product Designer</span>
+    <!-- Work (Command/Briefcase) -->
+    <div class="nav-item" onclick="showPage('work')">
+        <svg viewBox="0 0 24 24"><path d="M18 10h-1.26A8 8 0 1 0 9 20h9a5 5 0 0 0 0-10z"></path></svg> <!-- Command-like alternative or cloud -->
+        <!-- Will use standard Command symbol -->
+        <span class="tooltip">Work</span>
     </div>
-    <div class="timeline"><span>May 2024 – Aug 2024</span> <span class="toggle-icon">+</span></div>
-  </div>
-  <div class="acc-content">
-    <div class="acc-subtitle">Awarded Letter of Recommendation for Exceptional Performance | FOSS Bitcoin Grant Recipient | Selected via Summer of Bitcoin 2024.</div>
-    <ul>
-      <li>Owned product strategy and UX for Here Comes Bitcoin; redesigned core partner and educational sections resulting in a 25% uplift in user engagement across mobile and desktop by streamlining the onboarding and discovery journey to scale bitcoin adoption</li>
-      <li>Partnered with the bitcoin.design community to define requirements and ship a revamped global header experience, impacting 1,500+ active open-source contributors and all visitors through improved navigation and visual consistency across the ecosystem</li>
-      <li>Collaborated with Coinkite to design and launch a limited-edition Satscard and Tap Signer hardware wallet; scoped requirements, led design, and brought the product to market, driving adoption within the Bitcoin hardware ecosystem</li>
-    </ul>
-  </div>
-</div>
-
-<div class="acc-item">
-  <div class="acc-title">
-    <div class="left">
-      <img src="bitcoin.jpg" class="logo" alt="Sovran">
-      <span>Sovran E-Cash Wallet – Bitshala — Product Management Intern</span>
+    <!-- Blog (Pen) -->
+    <div class="nav-item" onclick="showPage('blog')">
+        <svg viewBox="0 0 24 24"><path d="M12 19l7-7 3 3-7 7-3-3z"></path><path d="M18 13l-1.5-7.5L2 2l3.5 14.5L13 18l5-5z"></path><path d="M2 2l7.586 7.586"></path><circle cx="11" cy="11" r="2"></circle></svg>
+        <span class="tooltip">Blog</span>
     </div>
-    <div class="timeline"><span>Dec 2024 – May 2025</span> <span class="toggle-icon">+</span></div>
-  </div>
-  <div class="acc-content">
-    <div class="acc-subtitle">Handled end-to-end 0-to-1 product journey, scaling the application from early development to production launch in 6 months.</div>
-    <ul>
-      <li>Managed end-to-end delivery of five critical user journeys; onboarding, token redemption, failure-state recovery, profile system, and e-cash receipt; defined requirements, identified user drop-off points, and shipped UI/UX improvements across iOS and Android</li>
-      <li>Conducted product audits across core flows, surfacing 15+ high-priority usability gaps including unclear transaction status and missing confirmation screens; defined requirements and partnered with engineering to ship fixes, significantly reducing drop-offs</li>
-      <li>Led release QA for TestFlight builds; proactively identified functional risks and partnered with engineering to resolve issues pre-launch, ensuring a stable production release with zero critical post-launch bugs</li>
-    </ul>
-  </div>
-</div>
-</div>
-
-<div class="section">
-<h2>Education</h2>
-<div class="acc-item">
-  <div class="acc-title">
-    <div class="left">
-      <span>IIT Kanpur — B.Tech in Chemical Engineering</span>
+    <!-- About (Person) -->
+    <div class="nav-item" onclick="showPage('about')">
+        <svg viewBox="0 0 24 24"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path><circle cx="12" cy="7" r="4"></circle></svg>
+        <span class="tooltip">About</span>
     </div>
-    <div class="timeline"><span>2021 – 2025</span> <span class="toggle-icon">+</span></div>
-  </div>
-  <div class="acc-content">
-    CPI: 7.0 / 10
-  </div>
-</div>
-</div>
-
-<div class="section">
-<h2>Skills</h2>
-<div class="acc-item">
-  <div class="acc-title">
-    <div class="left">
-      <span>Core Competencies</span>
+    <!-- Impossible List (Mountain) -->
+    <div class="nav-item" onclick="showPage('impossible')">
+        <svg viewBox="0 0 24 24"><path d="M8 3l4 8 5-5 5 15H2L8 3z"></path></svg>
+        <span class="tooltip">Impossible List</span>
     </div>
-    <div class="timeline"><span class="toggle-icon">+</span></div>
-  </div>
-  <div class="acc-content">
-    <p><strong style="color:#ddd; font-weight:600;">Product Management:</strong> Product Strategy, Product Roadmap, PRD Writing, Go-to-Market, A/B Testing, Funnel Analysis, Release QA, OKRs, User Research</p>
-    <p style="margin-top:10px"><strong style="color:#ddd; font-weight:600;">Analytics and Growth:</strong> CAC, ROAS, LTV, Cohort Analysis, Google Analytics, Meta Ads, Google Performance Max, Excel</p>
-    <p style="margin-top:10px"><strong style="color:#ddd; font-weight:600;">Design and Tools:</strong> Figma, UX Design, Wireframing, Jira, Notion, Confluence, Mixpanel, Amplitude, TestFlight, SQL</p>
-  </div>
-</div>
-</div>
+</nav>
 
-<div class="section">
-<h2>Awards & Achievements</h2>
-<div class="acc-item">
-  <div class="acc-title">
-    <div class="left">
-      <span>Key Highlights</span>
-    </div>
-    <div class="timeline"><span class="toggle-icon">+</span></div>
-  </div>
-  <div class="acc-content">
-    <ul>
-      <li><strong style="color:#ddd; font-weight:600;">Summer of Bitcoin 2024:</strong> Selected among top 65 from 35,000+ applicants across 70+ countries for open-source bitcoin design</li>
-      <li><strong style="color:#ddd; font-weight:600;">Bitshala Global Fellowship:</strong> Selected as Global Fellow for open-source product and UX design within the Bitcoin ecosystem</li>
-      <li><strong style="color:#ddd; font-weight:600;">PM School Challenge (Top 5 National Rank):</strong> Built product strategy for BigBasket Now, designing features including Notify Me, Voice Search, and Free Delivery Progress Bar; to address identified core user pain points</li>
-    </ul>
-  </div>
-</div>
-</div>
+<!-- Overriding SVG for Work to use a command key icon commonly used on mac mapping -->
+<script>
+    document.querySelectorAll('.nav-item')[1].querySelector('svg').innerHTML = '<path d="M18 3a3 3 0 0 0-3 3v12a3 3 0 0 0 3 3 3 3 0 0 0 3-3 3 3 0 0 0-3-3H6a3 3 0 0 0-3 3 3 3 0 0 0 3 3 3 3 0 0 0 3-3V6a3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3h12a3 3 0 0 0 3-3 3 3 0 0 0-3-3z"></path>';
+    document.querySelectorAll('.nav-item')[2].querySelector('svg').innerHTML = '<path d="M17 3a2.828 2.828 0 1 1 4 4L7.5 20.5 2 22l1.5-5.5L17 3z"></path>';
+</script>
 
-<div class="section">
-<h2>Projects</h2>
+<main class="main-container">
 
-<div class="acc-item">
-  <div class="acc-title">
-    <div class="left">
-      <span>Product Deck – HiLabs</span>
-    </div>
-    <div class="timeline"><span class="toggle-icon">+</span></div>
-  </div>
-  <div class="acc-content">
-    <div class="deck-stack">
-      <img src="deck2_page_3.png" class="deck-img deck-img-3" alt="Slide 3">
-      <img src="deck2_page_2.png" class="deck-img deck-img-2" alt="Slide 2">
-      <img src="deck2_page_1.png" class="deck-img deck-img-1" alt="Slide 1">
-    </div>
-  </div>
-</div>
+    <!-- HOME SECTION -->
+    <section id="home" class="active">
+        
+        <div class="block">
+            <div class="label-col">INTRO</div>
+            <div class="content-col">
+                <div style="display:flex; align-items:center; margin-bottom: 24px;">
+                    <img src="profile.jpg" alt="Sushant" style="width: 80px; height: 80px; border-radius: 50%; object-fit: cover; margin-right: 20px;">
+                    <div>
+                        <h1 style="font-size: 28px; font-weight: 600; margin-bottom: 4px;">Sushant Faujdar</h1>
+                        <p style="color: var(--text-muted); margin-bottom: 0;">I make confusing things make sense.</p>
+                    </div>
+                </div>
+                <p>Hi, I'm Sushant. I'm currently a Senior Business Associate at Meesho. Formerly, I was a Product Designer at Spiral (Block, Inc.) and a Product Management Intern at Sovran E-Cash Wallet.</p>
+            </div>
+        </div>
 
-<div class="acc-item">
-  <div class="acc-title">
-    <div class="left">
-      <span>Product Deck – IIT Kanpur</span>
-    </div>
-    <div class="timeline"><span class="toggle-icon">+</span></div>
-  </div>
-  <div class="acc-content">
-    <div class="deck-stack">
-      <img src="deck1_page_3.png" class="deck-img deck-img-3" alt="Slide 3">
-      <img src="deck1_page_2.png" class="deck-img deck-img-2" alt="Slide 2">
-      <img src="deck1_page_1.png" class="deck-img deck-img-1" alt="Slide 1">
-    </div>
-  </div>
-</div>
+        <div class="block">
+            <div class="label-col">UPDATES</div>
+            <div class="content-col">
+                
+                <div class="update-item">
+                    <div class="update-date">Apr 2026</div>
+                    <div>Completely redesigned my portfolio website to this minimalist layout.</div>
+                    <span class="pill">Design</span>
+                </div>
 
-<div class="acc-item">
-  <div class="acc-title">
-    <div class="left">
-      <span>Strategic Finance and GTM Analysis – boAt Lifestyle</span>
-    </div>
-    <div class="timeline"><span>May 2024 – Aug 2024</span> <span class="toggle-icon">+</span></div>
-  </div>
-  <div class="acc-content">
-    <div class="acc-subtitle">Under Prof. Amit Shukla, Department of Management Sciences, IIT Kanpur</div>
-    <ul>
-      <li>Analyzed price elasticity across 100+ users to identify GMV-maximizing ASP; built Marketing Mix Model to evaluate 4P strategy efficiency across channels including Amazon, Flipkart, & D2C; uncovering significant payback period gaps across acquisition channels</li>
-      <li>Uncovered a 15% growth lever in the smartwatch category by restructuring the discounting framework to cap promotional burn; projected a 25% LTV uplift through strategic reallocation of capital toward high-retention cohorts and underpenetrated markets</li>
-    </ul>
-  </div>
-</div>
-</div>
+                <div class="update-item">
+                    <div class="update-date">Dec 2025</div>
+                    <div>Published a new essay "The Last Exam" on Substack.</div>
+                    <span class="pill">Writing</span>
+                </div>
 
-<div class="section">
-<h2>Extracurricular Activities</h2>
-<div class="acc-item">
-  <div class="acc-title">
-    <div class="left">
-      <span>Activities & Leadership</span>
-    </div>
-    <div class="timeline"><span class="toggle-icon">+</span></div>
-  </div>
-  <div class="acc-content">
-    <ul>
-      <li><strong style="color:#ddd; font-weight:600;">Head, Media and Publicity (Inter IIT Sports Meet 2024):</strong> Led a 100+ member team across branding, sponsorships, and event operations; scaled digital reach to 20M+ users, a 75% YoY increase in platform engagement across all handles</li>
-      <li><strong style="color:#ddd; font-weight:600;">Content Creator, YouTube:</strong> Reached 60,000+ accounts by producing 22 videos focused on personal growth and finance</li>
-      <li><strong style="color:#ddd; font-weight:600;">Founder, The Nomad Newsletter:</strong> Publishing research-backed essays on geopolitics, life, and hard-earned lessons – 6+ editions on Substack</li>
-    </ul>
-  </div>
-</div>
-</div>
+                <div class="update-item">
+                    <div class="update-date">Jun 2025</div>
+                    <div>Started my journey at Meesho as a Senior Business Associate to optimize the seller funnel.</div>
+                    <span class="pill">Work</span>
+                </div>
 
-</div>
+            </div>
+        </div>
+    </section>
 
-<div id="read" style="display:none;">
-  <h2>Read</h2>
-  <p class="desc">I write about product thinking, systems, and behavior.</p>
+    <!-- WORK SECTION -->
+    <section id="work">
+        
+        <div class="block">
+            <div class="label-col">EXPERIENCE</div>
+            <div class="content-col">
+                
+                <div class="exp-item">
+                    <div class="exp-logo"><img src="meesho.jpg" alt="Meesho"></div>
+                    <div class="exp-details">
+                        <div>
+                            <div class="exp-title">Senior Business Associate</div>
+                            <div class="exp-company">Meesho</div>
+                            <div class="exp-desc">
+                                Hired as APM 1 via campus placements; role pivoted following restructuring.
+                                <ul>
+                                    <li>Executed root-cause decomposition of the seller funnel, unlocking actionable breakpoints for pre-shipment cancellations and RTOs.</li>
+                                    <li>Managed 2.5Cr+ ad spend via custom segmentation.</li>
+                                    <li>Achieved 6x ROAS and 22% CAC reduction while acquiring 7L sellers.</li>
+                                </ul>
+                            </div>
+                        </div>
+                        <div class="exp-date">Jun 2025 — Present</div>
+                    </div>
+                </div>
 
-  <div class="newsletter-grid">
+                <div class="exp-item">
+                    <div class="exp-logo"><img src="sob.png" alt="Spiral"></div>
+                    <div class="exp-details">
+                        <div>
+                            <div class="exp-title">Product Designer</div>
+                            <div class="exp-company">Spiral (Block, Inc.)</div>
+                            <div class="exp-desc">
+                                Summer of Bitcoin 2024. FOSS Bitcoin Grant Recipient.
+                                <ul>
+                                    <li>Owned product strategy and UX for Here Comes Bitcoin.</li>
+                                    <li>Collaborated with Coinkite to design a limited-edition Satscard and Tap Signer hardware wallet.</li>
+                                </ul>
+                            </div>
+                        </div>
+                        <div class="exp-date">May 2024 — Aug 2024</div>
+                    </div>
+                </div>
 
-    <a class="newsletter-card" href="https://thenomad21.substack.com/p/the-last-exam" target="_blank">
-      <div class="card-meta">
-        <span class="card-date">Dec 2025</span>
-        <span class="card-category">Essay</span>
-      </div>
-      <div class="card-title-text">The Last Exam</div>
-      <div class="card-subtitle">Maybe nostalgia is just happiness with a bruise on it.</div>
-      <span class="card-arrow">→</span>
-    </a>
+                <div class="exp-item">
+                    <div class="exp-logo"><img src="bitcoin.jpg" alt="Sovran"></div>
+                    <div class="exp-details">
+                        <div>
+                            <div class="exp-title">Product Management Intern</div>
+                            <div class="exp-company">Sovran E-Cash Wallet – Bitshala</div>
+                            <div class="exp-desc">
+                                0-to-1 product journey.
+                                <ul>
+                                    <li>Managed end-to-end delivery of onboarding, token redemption, and e-cash receipt.</li>
+                                    <li>Led release QA for TestFlight builds, ensuring stability.</li>
+                                </ul>
+                            </div>
+                        </div>
+                        <div class="exp-date">Dec 2024 — May 2025</div>
+                    </div>
+                </div>
 
-    <a class="newsletter-card" href="https://thenomad21.substack.com/p/the-world-is-becoming-small-again" target="_blank">
-      <div class="card-meta">
-        <span class="card-date">Dec 2025</span>
-        <span class="card-category">Geopolitics</span>
-      </div>
-      <div class="card-title-text">The World Is Becoming Small Again</div>
-      <div class="card-subtitle">Borders Are Back, and So Are Old Ghosts</div>
-      <span class="card-arrow">→</span>
-    </a>
+            </div>
+        </div>
 
-    <a class="newsletter-card" href="https://thenomad21.substack.com/p/the-ordinary" target="_blank">
-      <div class="card-meta">
-        <span class="card-date">Dec 2025</span>
-        <span class="card-category">Essay</span>
-      </div>
-      <div class="card-title-text">The Ordinary</div>
-      <div class="card-subtitle">I'm not talking about mediocrity, am I?</div>
-      <span class="card-arrow">→</span>
-    </a>
+        <div class="block">
+            <div class="label-col">PROJECTS</div>
+            <div class="content-col">
+                <div class="projects-grid">
+                    
+                    <div class="project-card">
+                        <div class="project-title">Product Deck – HiLabs</div>
+                        <div class="project-desc">A deep dive into product strategy.</div>
+                        <div class="deck-stack-mini">
+                            <img src="deck2_page_3.png" class="deck-img">
+                            <img src="deck2_page_2.png" class="deck-img">
+                            <img src="deck2_page_1.png" class="deck-img">
+                        </div>
+                    </div>
 
-    <a class="newsletter-card" href="https://thenomad21.substack.com/p/when-two-giants-whisper" target="_blank">
-      <div class="card-meta">
-        <span class="card-date">Dec 2025</span>
-        <span class="card-category">Geopolitics</span>
-      </div>
-      <div class="card-title-text">When Two Giants Whisper</div>
-      <div class="card-subtitle">The Quiet Architecture of a New World Order</div>
-      <span class="card-arrow">→</span>
-    </a>
+                    <div class="project-card">
+                        <div class="project-title">Product Deck – IIT Kanpur</div>
+                        <div class="project-desc">Comprehensive product analysis.</div>
+                        <div class="deck-stack-mini">
+                            <img src="deck1_page_3.png" class="deck-img">
+                            <img src="deck1_page_2.png" class="deck-img">
+                            <img src="deck1_page_1.png" class="deck-img">
+                        </div>
+                    </div>
 
-    <a class="newsletter-card" href="https://thenomad21.substack.com/p/wisdom-is-a-curse" target="_blank">
-      <div class="card-meta">
-        <span class="card-date">Nov 2025</span>
-        <span class="card-category">Essay</span>
-      </div>
-      <div class="card-title-text">Wisdom Is a Curse</div>
-      <div class="card-subtitle">The Less I Know The Better.</div>
-      <span class="card-arrow">→</span>
-    </a>
+                    <div class="project-card" style="grid-column: 1 / -1;">
+                        <div class="project-title">Strategic Finance and GTM Analysis – boAt</div>
+                        <div class="project-desc">Under Prof. Amit Shukla, Dept of Management Sciences, IIT Kanpur. (May 2024 - Aug 2024)</div>
+                        <p style="font-size: 14px; color: #444;">Analyzed price elasticity across 100+ users to identify GMV-maximizing ASP; built Marketing Mix Model to evaluate 4P strategy efficiency across channels including Amazon, Flipkart, & D2C; uncovering significant payback period gaps across acquisition channels. Projected a 25% LTV uplift through strategic reallocation of capital toward high-retention cohorts.</p>
+                    </div>
 
-    <a class="newsletter-card" href="https://thenomad21.substack.com/p/why-every-city-feels-the-same-now" target="_blank">
-      <div class="card-meta">
-        <span class="card-date">Nov 2025</span>
-        <span class="card-category">Essay</span>
-      </div>
-      <div class="card-title-text">Why Every City Feels the Same Now</div>
-      <div class="card-subtitle">Maybe it's not the cities that feel similar, maybe it's the part of us that keeps searching.</div>
-      <span class="card-arrow">→</span>
-    </a>
+                </div>
+            </div>
+        </div>
 
-  </div>
+    </section>
 
-  <a class="substack-cta" href="https://thenomad21.substack.com" target="_blank">
-    The Nomad → Read on Substack
-  </a>
-</div>
+    <!-- BLOG SECTION -->
+    <section id="blog">
+        <h1 class="page-title">Blog</h1>
+        <p class="page-subtitle">sometime, i write.</p>
 
-</div>
+        <div class="blog-grid">
+            
+            <a href="https://thenomad21.substack.com/p/the-last-exam" target="_blank" class="blog-card">
+                <div class="blog-visual" style="background:#f4ece4;">
+                    <span style="color:#5c4d3c">The Last <strong>Exam</strong></span>
+                </div>
+                <div class="blog-content">
+                    <div class="blog-title">The Last Exam</div>
+                    <div class="project-desc" style="margin-bottom:0;">Maybe nostalgia is just happiness with a bruise on it.</div>
+                    <div class="blog-meta">
+                        <span>Dec 2025</span>
+                        <span>Essay</span>
+                    </div>
+                </div>
+            </a>
+
+            <a href="https://thenomad21.substack.com/p/the-world-is-becoming-small-again" target="_blank" class="blog-card">
+                <div class="blog-visual" style="background:#e4eef4;">
+                    <span style="color:#3c4d5c">The World is <strong>Small</strong></span>
+                </div>
+                <div class="blog-content">
+                    <div class="blog-title">The World Is Becoming Small Again</div>
+                    <div class="project-desc" style="margin-bottom:0;">Borders Are Back, and So Are Old Ghosts.</div>
+                    <div class="blog-meta">
+                        <span>Dec 2025</span>
+                        <span>Geopolitics</span>
+                    </div>
+                </div>
+            </a>
+
+            <a href="https://thenomad21.substack.com/p/the-ordinary" target="_blank" class="blog-card">
+                <div class="blog-visual" style="background:#eff4e4;">
+                    <span style="color:#4d5c3c">The <strong>Ordinary</strong></span>
+                </div>
+                <div class="blog-content">
+                    <div class="blog-title">The Ordinary</div>
+                    <div class="project-desc" style="margin-bottom:0;">I'm not talking about mediocrity, am I?</div>
+                    <div class="blog-meta">
+                        <span>Dec 2025</span>
+                        <span>Essay</span>
+                    </div>
+                </div>
+            </a>
+
+            <a href="https://thenomad21.substack.com/p/when-two-giants-whisper" target="_blank" class="blog-card">
+                <div class="blog-visual" style="background:#f4e4eb;">
+                    <span style="color:#5c3c46">Giants <strong>Whisper</strong></span>
+                </div>
+                <div class="blog-content">
+                    <div class="blog-title">When Two Giants Whisper</div>
+                    <div class="project-desc" style="margin-bottom:0;">The Quiet Architecture of a New World Order.</div>
+                    <div class="blog-meta">
+                        <span>Dec 2025</span>
+                        <span>Geopolitics</span>
+                    </div>
+                </div>
+            </a>
+
+            <a href="https://thenomad21.substack.com/p/wisdom-is-a-curse" target="_blank" class="blog-card">
+                <div class="blog-visual" style="background:#e4f4f4;">
+                    <span style="color:#3c5c5c">Wisdom is a <strong>Curse</strong></span>
+                </div>
+                <div class="blog-content">
+                    <div class="blog-title">Wisdom Is a Curse</div>
+                    <div class="project-desc" style="margin-bottom:0;">The Less I Know The Better.</div>
+                    <div class="blog-meta">
+                        <span>Nov 2025</span>
+                        <span>Essay</span>
+                    </div>
+                </div>
+            </a>
+
+            <a href="https://thenomad21.substack.com/p/why-every-city-feels-the-same-now" target="_blank" class="blog-card">
+                <div class="blog-visual" style="background:#ede4f4;">
+                    <span style="color:#513c5c">Every City is the <strong>Same</strong></span>
+                </div>
+                <div class="blog-content">
+                    <div class="blog-title">Why Every City Feels the Same Now</div>
+                    <div class="project-desc" style="margin-bottom:0;">Maybe it's not the cities that feel similar...</div>
+                    <div class="blog-meta">
+                        <span>Nov 2025</span>
+                        <span>Essay</span>
+                    </div>
+                </div>
+            </a>
+
+        </div>
+    </section>
+
+    <!-- ABOUT SECTION -->
+    <section id="about">
+        
+        <div class="block">
+            <div class="label-col">BIO</div>
+            <div class="content-col">
+                <p>I am interested in product thinking, systems, and behavior. Currently, I work as a Senior Business Associate at Meesho. My journey traverses across Chemical Engineering at IIT Kanpur to digging deep into the intricacies of product management and strategy.</p>
+                <p>I believe that designing a product goes far beyond the UI; it’s about architecting human behavior and orchestrating seamless interactions. I enjoy digging into numbers, conducting funnel analyses, and defining the next generation of user experiences.</p>
+                <div style="margin-top: 24px; display:flex; gap: 16px;">
+                    <a href="https://www.linkedin.com/in/sushantf21" target="_blank" style="color: var(--accent-text); font-weight:500;">LinkedIn</a>
+                    <a href="https://x.com/FaujdarSushant" target="_blank" style="color: var(--accent-text); font-weight:500;">Twitter (X)</a>
+                    <a href="mailto:sushantfaujdar123@gmail.com" style="color: var(--accent-text); font-weight:500;">Email</a>
+                    <a href="https://thenomad21.substack.com" target="_blank" style="color: var(--accent-text); font-weight:500;">Substack</a>
+                </div>
+            </div>
+        </div>
+
+        <div class="block">
+            <div class="label-col">EDUCATION</div>
+            <div class="content-col">
+                <div class="exp-item" style="margin-bottom: 0;">
+                    <div class="exp-details">
+                        <div>
+                            <div class="exp-title">B.Tech in Chemical Engineering</div>
+                            <div class="exp-company">IIT Kanpur</div>
+                            <div class="exp-desc">CPI: 7.0 / 10</div>
+                        </div>
+                        <div class="exp-date">2021 — 2025</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="block">
+            <div class="label-col">SKILLS</div>
+            <div class="content-col">
+                <p><strong>Product Management:</strong> Product Strategy, Product Roadmap, PRD Writing, Go-to-Market, A/B Testing, Funnel Analysis, Release QA, OKRs, User Research.</p>
+                <p><strong>Analytics and Growth:</strong> CAC, ROAS, LTV, Cohort Analysis, Google Analytics, Meta Ads, Google Performance Max, Excel.</p>
+                <p><strong>Design and Tools:</strong> Figma, UX Design, Wireframing, Jira, Notion, Confluence, Mixpanel, Amplitude, TestFlight, SQL.</p>
+            </div>
+        </div>
+
+        <div class="block">
+            <div class="label-col">AWARDS</div>
+            <div class="content-col">
+                <ul style="padding-left: 16px;">
+                    <li style="margin-bottom: 12px;"><strong>Summer of Bitcoin 2024:</strong> Selected among top 65 from 35,000+ applicants across 70+ countries for open-source bitcoin design.</li>
+                    <li style="margin-bottom: 12px;"><strong>Bitshala Global Fellowship:</strong> Selected as Global Fellow for open-source product and UX design within the Bitcoin ecosystem.</li>
+                    <li><strong>PM School Challenge:</strong> Top 5 National Rank. Built product strategy for BigBasket Now.</li>
+                </ul>
+            </div>
+        </div>
+
+    </section>
+
+    <!-- IMPOSSIBLE LIST SECTION -->
+    <section id="impossible">
+        <h1 class="page-title">Impossible List</h1>
+        <p class="page-subtitle">A list of things I want to do that seem impossible until they are done.</p>
+
+        <div class="impossible-category">
+            <h3>Professional</h3>
+            <ul class="bucket-list">
+                <li class="done">Transition to a full-time Product role</li>
+                <li>Launch an application with 10k+ DAU</li>
+                <li>Write a book on Product Strategy</li>
+                <li>Start a successful tech company</li>
+            </ul>
+        </div>
+
+        <div class="impossible-category">
+            <h3>Adventure</h3>
+            <ul class="bucket-list">
+                <li>Skydiving</li>
+                <li>Get a scuba diving certification (PADI)</li>
+                <li>Hike to Everest Base Camp</li>
+            </ul>
+        </div>
+
+        <div class="impossible-category">
+            <h3>Personal Growth</h3>
+            <ul class="bucket-list">
+                <li>Read 50 books in one year</li>
+                <li>Run a half marathon</li>
+                <li class="done">Start a newsletter</li>
+                <li>Learn conversational Spanish</li>
+            </ul>
+        </div>
+
+    </section>
+
+</main>
 
 <script>
-// section toggle
-function showSection(section) {
-  document.getElementById('meet').style.display = 'none';
-  document.getElementById('read').style.display = 'none';
-  document.getElementById(section).style.display = 'block';
-}
+    function showPage(pageId) {
+        // Hide all sections
+        document.querySelectorAll('section').forEach(sec => {
+            sec.classList.remove('active');
+        });
+        
+        // Remove active state from nav items
+        document.querySelectorAll('.nav-item').forEach(nav => {
+            nav.classList.remove('active');
+        });
 
-// canvas
-const canvas = document.getElementById("bg");
-const ctx = canvas.getContext("2d");
+        // Show target section
+        document.getElementById(pageId).classList.add('active');
 
-canvas.width = window.innerWidth;
-canvas.height = window.innerHeight;
-
-// mouse
-let mouse = {
-  x: canvas.width / 2,
-  y: canvas.height / 2
-};
-
-window.addEventListener("mousemove", (e) => {
-  mouse.x = e.clientX;
-  mouse.y = e.clientY;
-});
-
-// touch support for mobile
-window.addEventListener("touchmove", (e) => {
-  if (e.touches.length > 0) {
-    mouse.x = e.touches[0].clientX;
-    mouse.y = e.touches[0].clientY;
-  }
-});
-
-// particles
-let particles = [];
-
-for (let i = 0; i < 50; i++) {
-  particles.push({
-    x: Math.random() * canvas.width,
-    y: Math.random() * canvas.height,
-    r: Math.random() * 2 + 0.5,
-    dx: (Math.random() - 0.5) * 0.3,
-    dy: (Math.random() - 0.5) * 0.3
-  });
-}
-
-function animate() {
-  ctx.clearRect(0, 0, canvas.width, canvas.height);
-
-  let haloRadius = 80;
-
-  // 🌫 draw soft halo glow
-  let gradient = ctx.createRadialGradient(
-    mouse.x, mouse.y, 10,
-    mouse.x, mouse.y, 120
-  );
-  gradient.addColorStop(0, "rgba(255,255,255,0.08)");
-  gradient.addColorStop(1, "rgba(255,255,255,0)");
-
-  ctx.fillStyle = gradient;
-  ctx.beginPath();
-  ctx.arc(mouse.x, mouse.y, 120, 0, Math.PI * 2);
-  ctx.fill();
-
-  particles.forEach(p => {
-
-    let dx = mouse.x - p.x;
-    let dy = mouse.y - p.y;
-    let dist = Math.sqrt(dx * dx + dy * dy);
-
-    if (dist < 120) {
-      let angle = Math.atan2(dy, dx);
-
-      let targetX = mouse.x - Math.cos(angle) * haloRadius;
-      let targetY = mouse.y - Math.sin(angle) * haloRadius;
-
-      p.x += (targetX - p.x) * 0.05;
-      p.y += (targetY - p.y) * 0.05;
+        // Add active state to clicked map - determining index
+        const indexMap = {
+            'home': 0,
+            'work': 1,
+            'blog': 2,
+            'about': 3,
+            'impossible': 4
+        };
+        document.querySelectorAll('.nav-item')[indexMap[pageId]].classList.add('active');
+        
+        window.scrollTo({ top: 0, behavior: 'smooth' });
     }
-
-    // natural float
-    p.x += p.dx;
-    p.y += p.dy;
-
-    // boundaries
-    if (p.x < 0 || p.x > canvas.width) p.dx *= -1;
-    if (p.y < 0 || p.y > canvas.height) p.dy *= -1;
-
-    // ✨ glow particles near cursor
-    let opacity = dist < 120 ? 0.6 : 0.2;
-
-    ctx.beginPath();
-    ctx.arc(p.x, p.y, p.r, 0, Math.PI * 2);
-    ctx.fillStyle = `rgba(255,255,255,${opacity})`;
-    ctx.fill();
-  });
-
-  requestAnimationFrame(animate);
-}
-
-animate();
-
-// resize
-window.addEventListener("resize", () => {
-  canvas.width = window.innerWidth;
-  canvas.height = window.innerHeight;
-});
-
-// Accordion Toggle Implementation
-document.addEventListener('DOMContentLoaded', () => {
-  const accItems = document.querySelectorAll('.acc-item');
-  accItems.forEach(item => {
-    const title = item.querySelector('.acc-title');
-    if (title) {
-      title.addEventListener('click', () => {
-        item.classList.toggle('active');
-      });
-    }
-  });
-});
 </script>
+
 </body>
 </html>
