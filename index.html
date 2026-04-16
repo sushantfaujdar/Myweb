@@ -603,6 +603,69 @@
                 grid-template-columns: 1fr;
             }
         }
+
+        /* --- DECK LIGHTBOX --- */
+        .deck-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100vw;
+            height: 100vh;
+            background: rgba(0,0,0,0.92);
+            z-index: 1000;
+            display: none;
+            align-items: center;
+            justify-content: center;
+            flex-direction: column;
+        }
+        .deck-overlay.open {
+            display: flex;
+        }
+        .deck-overlay img {
+            max-width: 80vw;
+            max-height: 75vh;
+            border-radius: 10px;
+            box-shadow: 0 20px 60px rgba(0,0,0,0.6);
+        }
+        .deck-nav {
+            margin-top: 24px;
+            display: flex;
+            align-items: center;
+            gap: 24px;
+        }
+        .deck-nav button {
+            background: rgba(255,255,255,0.1);
+            border: 1px solid #444;
+            color: #ccc;
+            padding: 8px 20px;
+            border-radius: 6px;
+            cursor: pointer;
+            font-size: 14px;
+            transition: all 0.2s ease;
+        }
+        .deck-nav button:hover {
+            background: rgba(255,255,255,0.15);
+            color: #fff;
+        }
+        .deck-counter {
+            color: #888;
+            font-size: 13px;
+        }
+        .deck-close {
+            position: absolute;
+            top: 24px;
+            right: 32px;
+            color: #888;
+            font-size: 28px;
+            cursor: pointer;
+            transition: color 0.2s;
+        }
+        .deck-close:hover {
+            color: #fff;
+        }
+        .project-card {
+            cursor: pointer;
+        }
     </style>
 </head>
 <body>
@@ -716,36 +779,26 @@
                     <div class="exp-logo"><img src="meesho.jpg" alt="Meesho"></div>
                     <div class="exp-details">
                         <div>
-                            <div class="exp-title">Senior Business Associate</div>
+                            <div class="exp-title">Associate – Product / Business</div>
                             <div class="exp-company">Meesho</div>
                             <div class="exp-desc">
-                                Hired as APM 1 via campus placements; role pivoted following restructuring.
+                                Hired as APM-1 via campus placements; role pivoted to Business Associate following company-wide restructuring one month before joining.
+                                <p style="margin: 12px 0 4px; color: #ccc; font-weight: 500;">Business</p>
                                 <ul>
-                                    <li>Executed root-cause decomposition of the seller funnel, unlocking actionable breakpoints for pre-shipment cancellations and RTOs.</li>
-                                    <li>Managed 2.5Cr+ ad spend via custom segmentation.</li>
-                                    <li>Achieved 6x ROAS and 22% CAC reduction while acquiring 7L sellers.</li>
+                                    <li>Decomposed entire seller funnel NMV/GMV; attributed 24pp gap to pre-shipment cancellations and 9pp to RTOs/Returns</li>
+                                    <li>Built campaign evaluation framework on conversion quality metrics; 1 OS/10D CAC, 1 OD/15D CAC, 5 OD/60D CAC</li>
+                                    <li>Managed 2.5Cr ad spend by custom segmentation; achieved 6x ROAS & 22% CAC drop; acquiring 7L sellers in 4 months</li>
+                                </ul>
+                                <p style="margin: 12px 0 4px; color: #ccc; font-weight: 500;">Product</p>
+                                <ul>
+                                    <li>Diagnosed NGST seller onboarding drop-offs; partnered with Product team to redesign EID generation via PAN card</li>
+                                    <li>Delivered 1.3x uplift in registration completions and significantly faster activation by implementing simplified SSR flow</li>
+                                    <li>Ran POCs with 300+ sellers to assess NDD readiness; intervention cohort showed 5% drop in user cancellation rates</li>
+                                    <li>Analysed cancellation drivers via listing quality analysis; image count, description length, content completeness mapped with cancellations; identified thresholds for high OByV listings and defined catalogue improvement recommendations</li>
                                 </ul>
                             </div>
                         </div>
                         <div class="exp-date">Jun 2025 — Present</div>
-                    </div>
-                </div>
-
-                <div class="exp-item">
-                    <div class="exp-logo"><img src="sob.png" alt="Spiral"></div>
-                    <div class="exp-details">
-                        <div>
-                            <div class="exp-title">Product Designer</div>
-                            <div class="exp-company">Spiral (Block, Inc.)</div>
-                            <div class="exp-desc">
-                                Summer of Bitcoin 2024. FOSS Bitcoin Grant Recipient.
-                                <ul>
-                                    <li>Owned product strategy and UX for Here Comes Bitcoin.</li>
-                                    <li>Collaborated with Coinkite to design a limited-edition Satscard and Tap Signer hardware wallet.</li>
-                                </ul>
-                            </div>
-                        </div>
-                        <div class="exp-date">May 2024 — Aug 2024</div>
                     </div>
                 </div>
 
@@ -756,14 +809,35 @@
                             <div class="exp-title">Product Management Intern</div>
                             <div class="exp-company">Sovran E-Cash Wallet – Bitshala</div>
                             <div class="exp-desc">
-                                0-to-1 product journey.
+                                End-to-end 0-to-1 product ownership; scaled application from early development to production launch in 6 months.
                                 <ul>
-                                    <li>Managed end-to-end delivery of onboarding, token redemption, and e-cash receipt.</li>
-                                    <li>Led release QA for TestFlight builds, ensuring stability.</li>
+                                    <li>Owned delivery of five critical user journeys; onboarding, token redemption, failure-state recovery, profile management, e-cash receipt; defined requirements and shipped UI/UX improvements minimizing friction points across iOS and Android</li>
+                                    <li>Surfaced 15+ high-priority usability gaps in structured product audits; partnered with engineering to rapidly ship fixes</li>
+                                    <li>Led release QA across TestFlight builds; resolved functional risks pre-launch, delivering stable production release with zero critical post-launch bugs</li>
                                 </ul>
                             </div>
                         </div>
                         <div class="exp-date">Dec 2024 — May 2025</div>
+                    </div>
+                </div>
+
+                <div class="exp-item">
+                    <div class="exp-logo"><img src="sob.png" alt="Spiral"></div>
+                    <div class="exp-details">
+                        <div>
+                            <div class="exp-title">Product Designer</div>
+                            <div class="exp-company">Spiral (Block, Inc.)</div>
+                            <div class="exp-desc">
+                                Awarded Letter of Recommendation for Exceptional Performance | FOSS Bitcoin Grant Recipient | Selected via Summer of Bitcoin 2024.
+                                <ul>
+                                    <li>Owned product strategy & UX for Spiral; redesigned partner & educational flows, driving 25% uplift in user engagement</li>
+                                    <li>Partnered with the bitcoin.design community to lead the redesign and shipment of a revamped global website header</li>
+                                    <li>Enhanced the user experience for over 1,500 active open-source contributors by unifying the global design system</li>
+                                    <li>Collaborated with Coinkite to scope, design, and launch limited-edition Satscard and Tap Signer hardware wallet; managed full product lifecycle from requirements to market launch</li>
+                                </ul>
+                            </div>
+                        </div>
+                        <div class="exp-date">May 2024 — Aug 2024</div>
                     </div>
                 </div>
 
@@ -775,9 +849,9 @@
             <div class="content-col">
                 <div class="projects-grid">
                     
-                    <div class="project-card">
+                    <div class="project-card" onclick="openDeck('deck2')">
                         <div class="project-title">Product Deck – HiLabs</div>
-                        <div class="project-desc">A deep dive into product strategy.</div>
+                        <div class="project-desc">Click to view full deck</div>
                         <div class="deck-stack-mini">
                             <img src="deck2_page_3.png" class="deck-img">
                             <img src="deck2_page_2.png" class="deck-img">
@@ -785,9 +859,9 @@
                         </div>
                     </div>
 
-                    <div class="project-card">
+                    <div class="project-card" onclick="openDeck('deck1')">
                         <div class="project-title">Product Deck – IIT Kanpur</div>
-                        <div class="project-desc">Comprehensive product analysis.</div>
+                        <div class="project-desc">Click to view full deck</div>
                         <div class="deck-stack-mini">
                             <img src="deck1_page_3.png" class="deck-img">
                             <img src="deck1_page_2.png" class="deck-img">
@@ -795,10 +869,15 @@
                         </div>
                     </div>
 
-                    <div class="project-card" style="grid-column: 1 / -1;">
-                        <div class="project-title">Strategic Finance and GTM Analysis – boAt</div>
-                        <div class="project-desc">Under Prof. Amit Shukla, Dept of Management Sciences, IIT Kanpur. (May 2024 - Aug 2024)</div>
-                        <p style="font-size: 14px; color: #444;">Analyzed price elasticity across 100+ users to identify GMV-maximizing ASP; built Marketing Mix Model to evaluate 4P strategy efficiency across channels including Amazon, Flipkart, & D2C; uncovering significant payback period gaps across acquisition channels. Projected a 25% LTV uplift through strategic reallocation of capital toward high-retention cohorts.</p>
+                    <div class="project-card" style="grid-column: 1 / -1; cursor: default;">
+                        <div class="project-title">Product & GTM Strategy – boAt Lifestyle</div>
+                        <div class="project-desc">Under Prof. Amit Shukla, Department of Management Sciences, IIT Kanpur (May 2024 – Aug 2024)</div>
+                        <div class="exp-desc">
+                            <ul>
+                                <li>Built Marketing Mix Model to evaluate 4P efficiency across Amazon, Flipkart, and D2C; identified payback period gaps and GMV-maximizing ASP via elasticity analysis across 100+ users providing data-driven channel recommendations</li>
+                                <li>Diagnosed over-reliance on discounting in smartwatch category; proposed restructured promotional framework projecting 15% revenue growth and 25% LTV uplift toward high-retention cohorts</li>
+                            </ul>
+                        </div>
                     </div>
 
                 </div>
@@ -947,9 +1026,19 @@
             <div class="label-col">AWARDS</div>
             <div class="content-col">
                 <ul style="padding-left: 16px;">
-                    <li style="margin-bottom: 12px;"><strong>Summer of Bitcoin 2024:</strong> Selected among top 65 from 35,000+ applicants across 70+ countries for open-source bitcoin design.</li>
-                    <li style="margin-bottom: 12px;"><strong>Bitshala Global Fellowship:</strong> Selected as Global Fellow for open-source product and UX design within the Bitcoin ecosystem.</li>
-                    <li><strong>PM School Challenge:</strong> Top 5 National Rank. Built product strategy for BigBasket Now.</li>
+                    <li style="margin-bottom: 12px;"><strong>Summer of Bitcoin 2024:</strong> Selected among top 65 from 35,000+ applicants across 70+ countries for open-source bitcoin product design</li>
+                    <li style="margin-bottom: 12px;"><strong>Bitshala Global Fellowship:</strong> Recognized as Global Fellow for open-source product and UX contributions within the Bitcoin ecosystem</li>
+                    <li style="margin-bottom: 12px;"><strong>PM School Challenge (Top 5 National Rank):</strong> Developed end-to-end product strategy for BigBasket Now; prioritized features; Notify Me, Voice Search, Free Delivery Progress Bar; grounded in user pain points</li>
+                </ul>
+            </div>
+        </div>
+
+        <div class="block">
+            <div class="label-col">EXTRACURRICULAR</div>
+            <div class="content-col">
+                <ul style="padding-left: 16px;">
+                    <li style="margin-bottom: 12px;"><strong>Head, Media & Publicity (Inter IIT Sports Meet 2024):</strong> Led 100+ member team; scaled digital reach to 20M+ users, a 75% YoY increase in platform engagement</li>
+                    <li><strong>Content Creator, YouTube:</strong> Grew to 60,000+ reached accounts across 22 videos on personal growth and college life</li>
                 </ul>
             </div>
         </div>
@@ -994,6 +1083,17 @@
 
 </main>
 
+<!-- Deck Lightbox Overlay -->
+<div class="deck-overlay" id="deckOverlay">
+    <span class="deck-close" onclick="closeDeck()">&times;</span>
+    <img id="deckSlide" src="" alt="Deck Slide">
+    <div class="deck-nav">
+        <button onclick="prevSlide()">&#8592; Prev</button>
+        <span class="deck-counter" id="deckCounter">1 / 3</span>
+        <button onclick="nextSlide()">Next &#8594;</button>
+    </div>
+</div>
+
 <script>
     function showPage(pageId) {
         // Hide all sections
@@ -1021,6 +1121,60 @@
         
         window.scrollTo({ top: 0, behavior: 'smooth' });
     }
+
+    // Deck lightbox
+    let currentDeck = [];
+    let currentSlideIndex = 0;
+
+    const decks = {
+        'deck1': ['deck1_page_1.png', 'deck1_page_2.png', 'deck1_page_3.png'],
+        'deck2': ['deck2_page_1.png', 'deck2_page_2.png', 'deck2_page_3.png']
+    };
+
+    function openDeck(deckId) {
+        currentDeck = decks[deckId];
+        currentSlideIndex = 0;
+        updateSlide();
+        document.getElementById('deckOverlay').classList.add('open');
+        document.body.style.overflow = 'hidden';
+    }
+
+    function closeDeck() {
+        document.getElementById('deckOverlay').classList.remove('open');
+        document.body.style.overflow = '';
+    }
+
+    function updateSlide() {
+        document.getElementById('deckSlide').src = currentDeck[currentSlideIndex];
+        document.getElementById('deckCounter').textContent = (currentSlideIndex + 1) + ' / ' + currentDeck.length;
+    }
+
+    function nextSlide() {
+        if (currentSlideIndex < currentDeck.length - 1) {
+            currentSlideIndex++;
+            updateSlide();
+        }
+    }
+
+    function prevSlide() {
+        if (currentSlideIndex > 0) {
+            currentSlideIndex--;
+            updateSlide();
+        }
+    }
+
+    // Close on overlay background click
+    document.getElementById('deckOverlay').addEventListener('click', function(e) {
+        if (e.target === this) closeDeck();
+    });
+
+    // Keyboard navigation
+    document.addEventListener('keydown', function(e) {
+        if (!document.getElementById('deckOverlay').classList.contains('open')) return;
+        if (e.key === 'Escape') closeDeck();
+        if (e.key === 'ArrowRight') nextSlide();
+        if (e.key === 'ArrowLeft') prevSlide();
+    });
 </script>
 
 </body>
