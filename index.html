@@ -447,23 +447,24 @@
         }
 
         .blog-visual {
-            height: 180px;
+            height: 200px;
             background: #1a1a1a;
             display: flex;
             align-items: center;
             justify-content: center;
-            font-size: 24px;
-            font-weight: 300;
-            color: #555;
-            text-align: center;
-            padding: 20px;
+            overflow: hidden;
             border-bottom: 1px solid var(--border-color);
         }
 
-        /* Specific styles for blog typography cards */
-        .blog-card .blog-visual strong {
-            font-weight: 600;
-            color: #ddd;
+        .blog-visual img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transition: transform 0.3s ease;
+        }
+
+        .blog-card:hover .blog-visual img {
+            transform: scale(1.05);
         }
 
         .blog-content {
@@ -904,8 +905,8 @@
         <div class="blog-grid">
             
             <a href="https://thenomad21.substack.com/p/the-last-exam" target="_blank" class="blog-card">
-                <div class="blog-visual" style="background:#1e1a16;">
-                    <span style="color:#8a7a6a">The Last <strong>Exam</strong></span>
+                <div class="blog-visual">
+                    <img src="blog_last_exam.jpg" alt="The Last Exam">
                 </div>
                 <div class="blog-content">
                     <div class="blog-title">The Last Exam</div>
@@ -918,8 +919,8 @@
             </a>
 
             <a href="https://thenomad21.substack.com/p/the-world-is-becoming-small-again" target="_blank" class="blog-card">
-                <div class="blog-visual" style="background:#141a1e;">
-                    <span style="color:#6a7a8a">The World is <strong>Small</strong></span>
+                <div class="blog-visual">
+                    <img src="blog_world_small.jpg" alt="The World Is Becoming Small Again">
                 </div>
                 <div class="blog-content">
                     <div class="blog-title">The World Is Becoming Small Again</div>
@@ -932,8 +933,8 @@
             </a>
 
             <a href="https://thenomad21.substack.com/p/the-ordinary" target="_blank" class="blog-card">
-                <div class="blog-visual" style="background:#181e14;">
-                    <span style="color:#7a8a6a">The <strong>Ordinary</strong></span>
+                <div class="blog-visual">
+                    <img src="blog_ordinary.jpg" alt="The Ordinary">
                 </div>
                 <div class="blog-content">
                     <div class="blog-title">The Ordinary</div>
@@ -946,8 +947,8 @@
             </a>
 
             <a href="https://thenomad21.substack.com/p/when-two-giants-whisper" target="_blank" class="blog-card">
-                <div class="blog-visual" style="background:#1e141a;">
-                    <span style="color:#8a6a7a">Giants <strong>Whisper</strong></span>
+                <div class="blog-visual">
+                    <img src="blog_giants_whisper.jpg" alt="When Two Giants Whisper">
                 </div>
                 <div class="blog-content">
                     <div class="blog-title">When Two Giants Whisper</div>
@@ -960,8 +961,8 @@
             </a>
 
             <a href="https://thenomad21.substack.com/p/wisdom-is-a-curse" target="_blank" class="blog-card">
-                <div class="blog-visual" style="background:#141e1e;">
-                    <span style="color:#6a8a8a">Wisdom is a <strong>Curse</strong></span>
+                <div class="blog-visual">
+                    <img src="blog_wisdom_curse.jpg" alt="Wisdom Is a Curse">
                 </div>
                 <div class="blog-content">
                     <div class="blog-title">Wisdom Is a Curse</div>
@@ -974,8 +975,8 @@
             </a>
 
             <a href="https://thenomad21.substack.com/p/why-every-city-feels-the-same-now" target="_blank" class="blog-card">
-                <div class="blog-visual" style="background:#1a141e;">
-                    <span style="color:#7a6a8a">Every City is the <strong>Same</strong></span>
+                <div class="blog-visual">
+                    <img src="blog_city_same.jpg" alt="Why Every City Feels the Same Now">
                 </div>
                 <div class="blog-content">
                     <div class="blog-title">Why Every City Feels the Same Now</div>
