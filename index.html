@@ -186,6 +186,31 @@
             font-weight: 400;
             color: var(--text-muted);
             margin-bottom: 36px;
+            height: 34px;
+            overflow: hidden;
+            position: relative;
+        }
+
+        .role-text {
+            display: inline-block;
+            opacity: 0;
+            transform: translateY(10px);
+            animation: roleRotate 8s infinite;
+            position: absolute;
+            left: 0;
+        }
+
+        .role-text:nth-child(1) { animation-delay: 0s; }
+        .role-text:nth-child(2) { animation-delay: 2s; }
+        .role-text:nth-child(3) { animation-delay: 4s; }
+        .role-text:nth-child(4) { animation-delay: 6s; }
+
+        @keyframes roleRotate {
+            0%   { opacity: 0; transform: translateY(10px); }
+            5%   { opacity: 1; transform: translateY(0); }
+            20%  { opacity: 1; transform: translateY(0); }
+            25%  { opacity: 0; transform: translateY(-10px); }
+            100% { opacity: 0; transform: translateY(-10px); }
         }
 
         .hero-socials {
@@ -621,7 +646,12 @@
         <div class="hero">
             <div class="hero-left">
                 <h1 class="hero-name">Sushant<br>Faujdar</h1>
-                <p class="hero-role">I make confusing things make sense.</p>
+                <div class="hero-role">
+                    <span class="role-text">Product Manager.</span>
+                    <span class="role-text">UX Designer.</span>
+                    <span class="role-text">Storyteller.</span>
+                    <span class="role-text">Writer.</span>
+                </div>
 
                 <div class="hero-socials">
                     <a href="https://www.linkedin.com/in/sushantf21" target="_blank" title="LinkedIn">
@@ -638,7 +668,7 @@
                     </a>
                 </div>
 
-                <div class="hero-location">India · IIT Kanpur · Meesho</div>
+                <div class="hero-location">Bengaluru, IN · 12.9116° N, 77.6389° E</div>
             </div>
 
             <div class="hero-right">
