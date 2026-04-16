@@ -128,9 +128,11 @@
         /* --- MAIN LAYOUT --- */
         .main-container {
             margin-left: var(--sidebar-width);
+            margin-right: auto;
             padding: 80px 60px 100px;
             max-width: 960px;
             min-height: 100vh;
+            margin-left: max(var(--sidebar-width), calc(50vw - 480px));
         }
 
         section {
