@@ -207,6 +207,11 @@
         .role-text:nth-child(3) { animation-delay: 4s; }
         .role-text:nth-child(4) { animation-delay: 6s; }
 
+        @keyframes pulse-green {
+            0%, 100% { opacity: 1; transform: scale(1); }
+            50% { opacity: 0.5; transform: scale(1.4); }
+        }
+
         @keyframes roleRotate {
             0%   { opacity: 0; transform: translateY(10px); }
             5%   { opacity: 1; transform: translateY(0); }
@@ -746,23 +751,70 @@
         <div class="block">
             <div class="label-col">UPDATES</div>
             <div class="content-col">
-                
+
+                <!-- NOW status card -->
+                <div style="background: rgba(255,255,255,0.03); border: 1px solid #2a2a2a; border-radius: 10px; padding: 20px 24px; margin-bottom: 32px;">
+                    <div style="display: flex; align-items: center; gap: 10px; margin-bottom: 10px;">
+                        <span style="display:inline-block; width:8px; height:8px; border-radius:50%; background:#4ade80; box-shadow: 0 0 8px #4ade80; animation: pulse-green 2s infinite;"></span>
+                        <span style="font-size: 11px; letter-spacing: 1.5px; text-transform: uppercase; color: #4ade80; font-weight: 600;">Currently</span>
+                    </div>
+                    <div style="font-size: 16px; color: #e8e8e8; font-weight: 500; line-height: 1.5;">Actively looking for full-time <strong>Product Manager</strong> roles.</div>
+                    <div style="font-size: 13px; color: #888; margin-top: 6px;">After 10 months at Meesho spanning business &amp; product work, I've decided to make the full switch into PM. Open to early-stage and high-growth product opportunities.</div>
+                    <a href="mailto:sushantfaujdar123@gmail.com" style="display:inline-block; margin-top: 14px; font-size: 12px; color: #ccc; border-bottom: 1px solid #444; padding-bottom: 2px; text-decoration: none; transition: color 0.2s ease;" onmouseover="this.style.color='#fff'" onmouseout="this.style.color='#ccc'">Get in touch →</a>
+                </div>
+
                 <div class="update-item">
                     <div class="update-date">Apr 2026</div>
-                    <div>Completely redesigned my portfolio website to this minimalist layout.</div>
+                    <div>Left Meesho (Associate – Business/Product) to pursue a full-time Product Manager role. Ready to own the full product lifecycle.</div>
+                    <span class="pill">Career Transition</span>
+                </div>
+
+                <div class="update-item">
+                    <div class="update-date">Apr 2026</div>
+                    <div>Completely redesigned my personal portfolio to this minimalist layout to better reflect my product thinking and design sensibility.</div>
                     <span class="pill">Design</span>
                 </div>
 
                 <div class="update-item">
                     <div class="update-date">Dec 2025</div>
-                    <div>Published a new essay "The Last Exam" on Substack.</div>
+                    <div>Published a batch of essays on Substack — "The Last Exam", "The Ordinary", "Wisdom Is a Curse", and three geopolitics pieces. Crossed 6 published essays.</div>
                     <span class="pill">Writing</span>
                 </div>
 
                 <div class="update-item">
                     <div class="update-date">Jun 2025</div>
-                    <div>Started my journey at Meesho as a Senior Business Associate to optimize the seller funnel.</div>
+                    <div>Joined Meesho as Associate – Business / Product. Originally hired as APM-1 via campus; role pivoted post-restructuring. Led ₹2.5Cr ad spend, achieved 6x ROAS and 22% CAC drop. Diagnosed seller onboarding drop-offs; redesigned EID generation flow delivering 1.3x uplift in registration completions.</div>
                     <span class="pill">Work</span>
+                </div>
+
+                <div class="update-item">
+                    <div class="update-date">Dec 2024 — May 2025</div>
+                    <div>PM Intern at <strong>Sovran E-Cash Wallet (Bitshala)</strong> — Took the product from early development to production launch in 6 months. Owned 5 critical user journeys across iOS &amp; Android, surfaced 15+ usability gaps, and led TestFlight release QA with zero critical post-launch bugs.</div>
+                    <span class="pill">Product</span>
+                </div>
+
+                <div class="update-item">
+                    <div class="update-date">May — Aug 2024</div>
+                    <div>Selected for <strong>Summer of Bitcoin 2024</strong> — top 65 from 35,000+ applicants across 70+ countries. Worked as Product Designer at <strong>Spiral (Block, Inc.)</strong>: redesigned partner &amp; educational flows, drove 25% uplift in user engagement, and co-launched limited-edition Satscard &amp; Tap Signer hardware wallets with Coinkite. Awarded Letter of Recommendation for Exceptional Performance and Bitshala Global Fellowship.</div>
+                    <span class="pill">Product · Design</span>
+                </div>
+
+                <div class="update-item">
+                    <div class="update-date">May — Aug 2024</div>
+                    <div>Built a <strong>Marketing Mix Model for boAt Lifestyle</strong> under Prof. Amit Shukla (Dept. of Management Sciences, IIT Kanpur). Evaluated 4P efficiency across Amazon, Flipkart &amp; D2C. Diagnosed over-reliance on discounting in the smartwatch category; proposed a restructured promo framework projecting 15% revenue growth and 25% LTV uplift.</div>
+                    <span class="pill">Strategy</span>
+                </div>
+
+                <div class="update-item">
+                    <div class="update-date">May 2025</div>
+                    <div>Graduated with a B.Tech in Chemical Engineering from <strong>IIT Kanpur</strong> (CPI: 7.0 / 10). Four years of engineering, product side-projects, and building things that matter.</div>
+                    <span class="pill">Education</span>
+                </div>
+
+                <div class="update-item">
+                    <div class="update-date">2024</div>
+                    <div>Ranked <strong>Top 5 nationally</strong> in the PM School Challenge — developed end-to-end product strategy for BigBasket Now (Notify Me, Voice Search, Free Delivery Progress Bar).</div>
+                    <span class="pill">Award</span>
                 </div>
 
             </div>
@@ -1001,7 +1053,7 @@
         <div class="block">
             <div class="label-col">BIO</div>
             <div class="content-col">
-                <p>I am interested in product thinking, systems, and behavior. Currently, I work as a Senior Business Associate at Meesho. My journey traverses across Chemical Engineering at IIT Kanpur to digging deep into the intricacies of product management and strategy.</p>
+                <p>I am interested in product thinking, systems, and behavior. I recently left Meesho (Associate – Business/Product) where I spent 10 months driving seller growth and shipping product improvements. Now I'm actively looking for a full-time <strong>Product Manager</strong> role where I can own the full product lifecycle. My journey spans Chemical Engineering at IIT Kanpur, open-source product work with Spiral (Block, Inc.), and a 0-to-1 PM internship at Sovran/Bitshala.</p>
                 <p>I believe that designing a product goes far beyond the UI; it’s about architecting human behavior and orchestrating seamless interactions. I enjoy digging into numbers, conducting funnel analyses, and defining the next generation of user experiences.</p>
                 <div style="margin-top: 24px; display:flex; gap: 16px;">
                     <a href="https://www.linkedin.com/in/sushantf21" target="_blank" style="color: #ccc; font-weight:500; border-bottom: 1px solid #444; padding-bottom:2px;">LinkedIn</a>
